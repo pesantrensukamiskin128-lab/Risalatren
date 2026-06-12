@@ -1162,18 +1162,19 @@ async function drawTandaTangan(doc, surat, startY, qrDataUrl) {
   const jabatanSekr  = sekretaris?.jabatan || 'Sekretaris';
 
   doc.font(F_REG).fontSize(FS_ISI).fillColor('#000000')
-     .text(jabatanKetua + ',', xKetua, y, { width: colWKetua, align: 'left' });
+     .text(jabatanKetua + ',', xKetua, y, { width: colWKetua, align: 'center' });
   doc.font(F_REG).fontSize(FS_ISI).fillColor('#000000')
-     .text(jabatanSekr + ',', xSekr, y, { width: colW, align: 'left' });
+     .text(jabatanSekr + ',', xSekr, y, { width: colW, align: 'center' });
   y = doc.y + 4;
 
   // ── Baris 2: QR di bawah jabatan Ketua ────────────────────────────────────
   if (qrDataUrl && !dewanMasyayikh) {
-    // QR di kolom Ketua hanya jika tidak ada Dewan Masyayikh
+    // Tengahkan QR dalam kolom Ketua
+    const qrXKetua = xKetua + (colWKetua - qrSz) / 2;
     try {
-      doc.image(qrDataUrl, xKetua, y, { width: qrSz, height: qrSz });
+      doc.image(qrDataUrl, qrXKetua, y, { width: qrSz, height: qrSz });
       const verifikasiUrl = `${getFrontendUrl()}/verifikasi/${surat.qrCodeToken}`;
-      doc.link(xKetua, y, qrSz, qrSz, verifikasiUrl);
+      doc.link(qrXKetua, y, qrSz, qrSz, verifikasiUrl);
     } catch (_) {}
     y += qrSz + 4;
   } else {
@@ -1185,19 +1186,19 @@ async function drawTandaTangan(doc, surat, startY, qrDataUrl) {
 
   if (kepala) {
     doc.font(F_BOLD).fontSize(FS_ISI).fillColor('#000000')
-       .text(kepala.namaLengkap || '', xKetua, yName, { width: colWKetua, align: 'left' });
+       .text(kepala.namaLengkap || '', xKetua, yName, { width: colWKetua, align: 'center' });
     if (kepala.nuptk) {
       doc.font(F_REG).fontSize(FS_ISI - 0.5).fillColor('#000000')
-         .text(`NUPTK: ${kepala.nuptk}`, xKetua, doc.y + 1, { width: colWKetua, align: 'left' });
+         .text(`NUPTK: ${kepala.nuptk}`, xKetua, doc.y + 1, { width: colWKetua, align: 'center' });
     }
   }
 
   if (sekretaris) {
     doc.font(F_BOLD).fontSize(FS_ISI).fillColor('#000000')
-       .text(sekretaris.namaLengkap || '', xSekr, yName, { width: colW, align: 'left' });
+       .text(sekretaris.namaLengkap || '', xSekr, yName, { width: colW, align: 'center' });
     if (sekretaris.nuptk) {
       doc.font(F_REG).fontSize(FS_ISI - 0.5).fillColor('#000000')
-         .text(`NUPTK: ${sekretaris.nuptk}`, xSekr, doc.y + 1, { width: colW, align: 'left' });
+         .text(`NUPTK: ${sekretaris.nuptk}`, xSekr, doc.y + 1, { width: colW, align: 'center' });
     }
   }
 
@@ -1211,21 +1212,22 @@ async function drawTandaTangan(doc, surat, startY, qrDataUrl) {
 
     // "Mengetahui:"
     doc.font(F_REG).fontSize(FS_ISI).fillColor('#000000')
-       .text('Mengetahui:', dmX, yd, { width: dmW, align: 'left' });
+       .text('Mengetahui:', dmX, yd, { width: dmW, align: 'center' });
     yd = doc.y + 2;
 
     // Jabatan
     const jabatanDM = dewanMasyayikh.jabatan || 'Dewan Masyayikh';
     doc.font(F_REG).fontSize(FS_ISI).fillColor('#000000')
-       .text(jabatanDM + ',', dmX, yd, { width: dmW, align: 'left' });
+       .text(jabatanDM + ',', dmX, yd, { width: dmW, align: 'center' });
     yd = doc.y + 4;
 
-    // QR (jika ada) di bawah jabatan Dewan Masyayikh
+    // QR tengah dalam kolom Dewan Masyayikh
     if (qrDataUrl) {
+      const qrXdm = dmX + (dmW - qrSz) / 2;
       try {
-        doc.image(qrDataUrl, dmX, yd, { width: qrSz, height: qrSz });
+        doc.image(qrDataUrl, qrXdm, yd, { width: qrSz, height: qrSz });
         const verifikasiUrl = `${getFrontendUrl()}/verifikasi/${surat.qrCodeToken}`;
-        doc.link(dmX, yd, qrSz, qrSz, verifikasiUrl);
+        doc.link(qrXdm, yd, qrSz, qrSz, verifikasiUrl);
       } catch (_) {}
       yd += qrSz + 4;
     } else {
@@ -1234,10 +1236,10 @@ async function drawTandaTangan(doc, surat, startY, qrDataUrl) {
 
     // Nama Dewan Masyayikh
     doc.font(F_BOLD).fontSize(FS_ISI).fillColor('#000000')
-       .text(dewanMasyayikh.namaLengkap || '', dmX, yd, { width: dmW, align: 'left' });
+       .text(dewanMasyayikh.namaLengkap || '', dmX, yd, { width: dmW, align: 'center' });
     if (dewanMasyayikh.nuptk) {
       doc.font(F_REG).fontSize(FS_ISI - 0.5).fillColor('#000000')
-         .text(`NUPTK: ${dewanMasyayikh.nuptk}`, dmX, doc.y + 1, { width: dmW, align: 'left' });
+         .text(`NUPTK: ${dewanMasyayikh.nuptk}`, dmX, doc.y + 1, { width: dmW, align: 'center' });
     }
 
     return doc.y + 2;
@@ -1306,7 +1308,7 @@ function getNamaJenisSurat(kode) {
   return map[kode] || kode;
 }
 
-// ── HELPER: TITIMANGSA (tempat & tanggal) — sejajar dengan kolom Ketua (kiri TTD)
+// ── HELPER: TITIMANGSA (tempat & tanggal) — ditengahkan dalam kolom Sekretaris
 function drawTitimangsa(doc, surat, startY) {
   const hijriyah  = (surat.tanggalHijriyah || '').replace(/H\.?\s*$/, '').trim();
   const tglHijr   = hijriyah + ' H.';
@@ -1315,32 +1317,37 @@ function drawTitimangsa(doc, surat, startY) {
     : '';
   const tempat = surat.tempatTerbit || 'Bandung';
 
-  // Sejajarkan dengan xSekr (posisi kolom Sekretaris di kanan)
-  // Rumus dari drawTandaTangan: colW=180, gapCol=CW-180*2, xSekr=ML+colW+gapCol
+  // Posisi kolom Sekretaris — sama dengan drawTandaTangan
   const colW   = 180;
   const gapCol = CW - colW * 2;
-  const blokX  = ML + colW + gapCol;  // sama dengan xSekr
-  const blokW  = colW;
+  const xSekr  = ML + colW + gapCol;  // tepi kiri kolom Sekretaris
 
-  // Hitung lebar prefix "Bandung, " agar baris kedua indent sejajar
   doc.font(F_REG).fontSize(FS_ISI);
-  const prefix   = `${tempat}, `;
-  const prefixW  = doc.widthOfString(prefix);
-  const tglW     = blokW - prefixW;
+  const prefix  = `${tempat}, `;
+  const prefixW = doc.widthOfString(prefix);
+  const hijrW   = doc.widthOfString(tglHijr);
+  const baris1W = prefixW + hijrW;  // lebar total baris pertama
+
+  // Tengahkan baris pertama dalam kolom Sekretaris
+  // startX = xSekr + (colW - baris1W) / 2, tapi jangan sampai kurang dari xSekr
+  const startX  = Math.max(xSekr, xSekr + (colW - baris1W) / 2);
+  // Baris kedua (tanggal Masehi) dimulai sejajar dengan tanggal Hijriyah
+  const masehibX = startX + prefixW;
+  const masehiW  = Math.max(colW - (masehibX - xSekr), 60);
 
   let y = startY;
 
   // Baris 1: "Bandung, " + tanggal hijriyah
   doc.font(F_REG).fontSize(FS_ISI).fillColor('#000000')
-     .text(prefix, blokX, y, { width: prefixW, lineBreak: false });
+     .text(prefix, startX, y, { width: prefixW, lineBreak: false });
   doc.font(F_REG).fontSize(FS_ISI).fillColor('#000000')
-     .text(tglHijr, blokX + prefixW, y, { width: tglW });
+     .text(tglHijr, startX + prefixW, y, { width: hijrW + 10 });
   y = doc.y + 1;
 
   // Baris 2: tanggal masehi — indent sejajar dengan tanggal hijriyah
   if (tglMasehi) {
     doc.font(F_REG).fontSize(FS_ISI).fillColor('#000000')
-       .text(tglMasehi, blokX + prefixW, y, { width: tglW });
+       .text(tglMasehi, masehibX, y, { width: masehiW });
     y = doc.y + 1;
   }
 
@@ -1348,6 +1355,8 @@ function drawTitimangsa(doc, surat, startY) {
 }
 
 // ── HELPER: TITIMANGSA SK (Ditetapkan di / Tanggal) ──────────────────────────
+// Posisi dihitung berdasarkan nama bulan Hijriyah terpanjang ("Jumadil Awwal")
+// dan Masehi terpanjang ("September") agar tidak pernah meluap ke baris baru.
 function drawTitimangsaSK(doc, surat, startY) {
   const hijriyah   = (surat.tanggalHijriyah || '').replace(/H\.?\s*$/, '').trim();
   const tglHijr    = hijriyah + ' H.';
@@ -1356,34 +1365,36 @@ function drawTitimangsaSK(doc, surat, startY) {
     : '';
   const tempat     = surat.tempatTerbit || 'Bandung';
 
-  // Sejajarkan dengan xSekr (kolom Sekretaris)
-  const colW   = 180;
-  const gapCol = CW - colW * 2;
-  const blokX  = ML + colW + gapCol;
-  const blokW  = colW;
-  const labelW = 80;
+  // Posisi tetap berdasarkan kalkulasi lebar teks terpanjang (Times-Roman 11pt):
+  //   label  "Ditetapkan di" = ~62 pt
+  //   colon  " : "           = ~9 pt
+  //   nilai  "30 Jumadil Awwal 1447 H." = ~120 pt  ← terpanjang
+  //   total blok             = ~191 pt
+  //   blokX = ML + CW - 191  = 57 + 481 - 191 = 347 (rata kanan, tidak meluap)
+  const blokX  = 347;
+  const labelW = 62;
   const colonX = blokX + labelW;
-  const valX   = colonX + 8;
-  const valW   = blokW - labelW - 8;
+  const valX   = colonX + 9;
+  const valW   = 124;   // cukup untuk "30 Jumadil Awwal 1447 H." + sedikit margin
 
   let y = startY;
 
   doc.font(F_REG).fontSize(FS_ISI).fillColor('#000000');
   doc.text('Ditetapkan di', blokX, y, { width: labelW, lineBreak: false });
-  doc.text(':', colonX, y, { width: 8, lineBreak: false });
+  doc.text(':', colonX, y, { width: 9, lineBreak: false });
   doc.text(tempat, valX, y, { width: valW });
   y = doc.y + 1;
 
   doc.font(F_REG).fontSize(FS_ISI).fillColor('#000000');
   doc.text('Tanggal', blokX, y, { width: labelW, lineBreak: false });
-  doc.text(':', colonX, y, { width: 8, lineBreak: false });
+  doc.text(':', colonX, y, { width: 9, lineBreak: false });
   doc.text(tglHijr, valX, y, { width: valW });
   y = doc.y + 1;
 
   if (tglMasehi) {
     doc.font(F_REG).fontSize(FS_ISI).fillColor('#000000');
     doc.text('', blokX, y, { width: labelW, lineBreak: false });
-    doc.text('', colonX, y, { width: 8, lineBreak: false });
+    doc.text('', colonX, y, { width: 9, lineBreak: false });
     doc.text(tglMasehi, valX, y, { width: valW });
     y = doc.y + 1;
   }
