@@ -11,9 +11,9 @@ async function main() {
   if (!existingProfil) {
     await prisma.organisasiProfil.create({
       data: {
-        tingkatanOrg: 'Madrasah Ibtidaiyah',
-        namaOrg:      'Madrasah',
-        daerahOrg:    '',
+        tingkatanOrg: 'Sekretaris',
+        namaOrg:      'Forum Pondok Pesantren (FPP) Kota Bandung',
+        daerahOrg:    'Kota Bandung',
         alamat:       '',
         telepon:      '',
         email:        '',
@@ -25,48 +25,48 @@ async function main() {
 
   // Buat admin default
   const existingAdmin = await prisma.user.findUnique({
-    where: { email: 'admin@sirama.com' },
+    where: { email: 'admin@risalatren.com' },
   });
 
   if (!existingAdmin) {
     const hashedPassword = await bcrypt.hash('admin123', 12);
     await prisma.user.create({
       data: {
-        email: 'admin@sirama.com',
+        email: 'admin@risalatren.com',
         password: hashedPassword,
         namaLengkap: 'Administrator',
         jabatan: 'Administrator Sistem',
         role: 'ADMIN',
       },
     });
-    console.log('✅ Admin default dibuat: admin@sirama.com / admin123');
+    console.log('✅ Admin default dibuat: admin@risalatren.com / admin123');
   }
 
   // Buat user contoh
   const users = [
     {
-      email: 'tatausaha@sirama.com',
+      email: 'sekretaris@risalatren.com',
       namaLengkap: 'Siti Aminah',
-      jabatan: 'Kepala Tata Usaha',
-      role: 'TATA_USAHA',
+      jabatan: 'Sekretaris',
+      role: 'SEKRETARIS',
     },
     {
-      email: 'kepala@sirama.com',
+      email: 'kepala@risalatren.com',
       namaLengkap: 'Bapak Kepala',
-      jabatan: 'Kepala Madrasah',
+      jabatan: 'Kepala Pondok Pesantren',
       role: 'KEPALA',
     },
     {
-      email: 'guru1@sirama.com',
+      email: 'pengurus1@risalatren.com',
       namaLengkap: 'Nur Hidayah',
-      jabatan: 'Guru Kelas 1',
-      role: 'GURU',
+      jabatan: 'Ustadz/Ustadzah',
+      role: 'PENGURUS',
     },
     {
-      email: 'guru2@sirama.com',
+      email: 'pengurus2@risalatren.com',
       namaLengkap: 'Aisyah Putri',
-      jabatan: 'Guru Kelas 2',
-      role: 'GURU',
+      jabatan: 'Ustadz/Ustadzah',
+      role: 'PENGURUS',
     },
   ];
 

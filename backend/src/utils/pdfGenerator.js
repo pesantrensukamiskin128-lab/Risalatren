@@ -20,6 +20,9 @@ const F_BOLD_ITAL = 'Times-BoldItalic';
 const F_ARAB      = 'ArabFont';
 const F_ARAB_BOLD = 'ArabFontBold';
 const F_NASKH     = 'NaskhFont';
+// Font kop surat — Helvetica (built-in PDFKit, mirip Helvetica/Swiss)
+const F_KOP       = 'Helvetica-Bold';
+const F_KOP_REG   = 'Helvetica';
 
 // ── PAGE CONSTANTS ─────────────────────────────────────────────────────────[...]
 const ML = 57;   // margin left
@@ -35,9 +38,9 @@ const FS_ARAB         = 14;
 const LINE_GAP        = 2;   // line gap untuk paragraf biasa
 const LINE_GAP_TABLE  = 0;   // line gap dalam sel tabel — rapat seperti paragraf biasa
 const FS_KOP_TINGKAT  = 10;
-const FS_KOP_NAMA     = 16;
+const FS_KOP_NAMA     = 18;  // diperbesar, Helvetica Bold hitam
 const FS_KOP_ARAB     = 22;  // font Arab di kop surat
-const FS_KOP_DAERAH   = 11;
+const FS_KOP_DAERAH   = 18;  // disamakan dengan nama lembaga
 const FS_KOP_ALAMAT   = 8.5;
 const FS_KOP_KONTAK   = 7.5;
 
@@ -863,7 +866,7 @@ async function drawKopSurat(doc, organisasi, pageY) {
   const email     = organisasi.email        || '';
   const website   = organisasi.website      || '';
 
-  const logoMaxSize = 80;  // batas maksimal logo (diperbesar dari 65)
+  const logoMaxSize = 72;  // diperbesar hingga batas atas kop
   const logoX       = ML;
   const textX       = hasLogo ? ML + logoMaxSize + 10 : ML;
   const textW       = hasLogo ? CW - logoMaxSize - 10  : CW;
@@ -890,7 +893,7 @@ async function drawKopSurat(doc, organisasi, pageY) {
         drawW = logoMaxSize * ratio;
       }
 
-      // Estimasi tinggi total teks kop agar bisa center logo secara vertikal
+      // Estimasi tinggi total teks kop agar logo center vertikal
       const lineCount =
         (tingkatan ? 1 : 0) +
         (namaArab  ? 1 : 0) +
@@ -899,8 +902,12 @@ async function drawKopSurat(doc, organisasi, pageY) {
         (alamat    ? 1 : 0) +
         ((telepon || email || website) ? 1 : 0);
       const estimatedTextH = Math.max(
-        lineCount * 18,   // estimasi kasar tiap baris ~18pt
-        drawH             // minimal setinggi logo itu sendiri
+        (tingkatan ? FS_KOP_TINGKAT * 1.4 : 0) +
+        (namaOrg   ? FS_KOP_NAMA    * 1.4 : 0) +
+        (daerah    ? FS_KOP_DAERAH  * 1.4 : 0) +
+        (alamat    ? FS_KOP_ALAMAT  * 1.4 : 0) +
+        ((telepon || email || website) ? FS_KOP_KONTAK * 1.4 : 0),
+        drawH
       );
 
       const logoY = y + Math.max(0, (estimatedTextH - drawH) / 2);
@@ -914,14 +921,14 @@ async function drawKopSurat(doc, organisasi, pageY) {
     }
   }
 
-  // Tingkatan — hanya render jika tidak kosong
+  // Tingkatan — font Helvetica, hijau
   if (tingkatan) {
-    doc.font(F_BOLD).fontSize(FS_KOP_TINGKAT).fillColor(GREEN)
+    doc.font(F_KOP_REG).fontSize(FS_KOP_TINGKAT).fillColor(GREEN)
        .text(tingkatan.toUpperCase(), textX, y, { width: textW, align: 'center' });
     y = doc.y + 1;
   }
 
-  // Nama Arab yayasan — tepat di bawah tingkatan, sebelum nama Latin
+  // Nama Arab yayasan
   if (namaArab && HAS_ARAB) {
     try {
       doc.font(F_ARAB).fontSize(FS_KOP_ARAB).fillColor(GREEN)
@@ -932,44 +939,43 @@ async function drawKopSurat(doc, organisasi, pageY) {
     }
   }
 
-  // Nama organisasi (Latin) — hanya render jika tidak kosong
+  // Nama organisasi — Helvetica Bold, hitam, besar
   if (namaOrg) {
-    doc.font(F_BOLD).fontSize(FS_KOP_NAMA).fillColor(GREEN)
+    doc.font(F_KOP).fontSize(FS_KOP_NAMA).fillColor('#000000')
        .text(namaOrg.toUpperCase(), textX, y, { width: textW, align: 'center' });
     y = doc.y + 1;
   }
 
-  // Daerah
+  // Daerah — Helvetica Bold, hitam, sama besar dengan nama
   if (daerah) {
-    doc.font(F_BOLD).fontSize(FS_KOP_DAERAH).fillColor(GREEN)
+    doc.font(F_KOP).fontSize(FS_KOP_DAERAH).fillColor('#000000')
        .text(daerah.toUpperCase(), textX, y, { width: textW, align: 'center' });
-    y = doc.y + 1;
+    y = doc.y + 2;
   }
 
-  // Alamat
+  // Alamat — hijau
   if (alamat) {
-    doc.font(F_REG).fontSize(FS_KOP_ALAMAT).fillColor('#333333')
+    doc.font(F_KOP_REG).fontSize(FS_KOP_ALAMAT).fillColor(GREEN)
        .text(alamat, textX, y, { width: textW, align: 'center' });
     y = doc.y + 1;
   }
 
-  // Kontak — teks biasa dengan prefiks, dipisah |
+  // Kontak — hijau
   const kontakParts = [];
   if (telepon) kontakParts.push(`No. Telp.: ${telepon}`);
   if (email)   kontakParts.push(`Email: ${email}`);
   if (website) kontakParts.push(`Website: ${website}`);
   const kontak = kontakParts.join('  |  ');
   if (kontak) {
-    doc.font(F_REG).fontSize(FS_KOP_KONTAK).fillColor('#333333')
+    doc.font(F_KOP_REG).fontSize(FS_KOP_KONTAK).fillColor(GREEN)
        .text(kontak, textX, y, { width: textW, align: 'center' });
     y = doc.y + 1;
   }
 
-  // Satu garis tebal saja
-  const lineY = Math.max(y + 4, (pageY !== undefined ? pageY : MT) + logoMaxSize + 4);
-  doc.moveTo(ML, lineY).lineTo(ML + CW, lineY).lineWidth(2.5).strokeColor(GREEN).stroke();
+  // Garis pemisah kop — DIHAPUS sesuai permintaan
+  // (tidak ada garis hijau di kop)
 
-  return lineY + 2;
+  return y + 10;
 }
 
 // ── IDENTITAS SURAT ─────────────────────────────────────────────────────────[...]
@@ -995,7 +1001,7 @@ function drawIdentitasSurat(doc, surat, startY) {
     y = doc.y + 1;
   }
 
-  return y + 4;
+  return y + 8;
 }
 
 // ── TUJUAN SURAT ──────────────────────────────────────────────────────────[...]
@@ -1131,51 +1137,113 @@ async function renderBodyBlocks(doc, blocks, startY, kopHeight, organisasi, foot
   return y;
 }
 
-// ── TANDA TANGAN ──────────────────────────────────────────────────────────[...]
-// Layout baru: hanya Kepala yang tanda tangan, posisi rata kiri di sisi kanan halaman
+// ── TANDA TANGAN ─────────────────────────────────────────────────────────────
+// ── TANDA TANGAN ─────────────────────────────────────────────────────────────
+// Layout 2 kolom: Ketua (kiri) dan Sekretaris (kanan)
+// + Dewan Masyayikh (opsional) di bawah tengah dengan "Mengetahui:"
 async function drawTandaTangan(doc, surat, startY, qrDataUrl) {
-  const blokW  = 200;                    // lebar blok TTD
-  const blokX  = ML + CW - blokW;       // posisi X (rata kanan)
-  const qrSz   = 45;
-  const gapTtd = FS_ISI * 4;            // ruang tanda tangan
+  const colW        = 180;
+  const gapCol      = CW - colW * 2;
+  const ketuaOffset = 50;
+  const xKetua      = ML + ketuaOffset;
+  const xSekr       = ML + colW + gapCol;
+  const colWKetua   = colW - ketuaOffset;
+  const qrSz        = 50;
+  const gapTtd      = FS_ISI * 4;
 
-  const kepala = surat.kepala;
+  const kepala         = surat.kepala;
+  const sekretaris     = surat.tataUsaha;       // field DB tetap tataUsaha
+  const dewanMasyayikh = surat.dewanMasyayikh;
 
-  let y = startY + 2;
+  let y = startY + 4;
 
-  // Jabatan Kepala
-  const jabatanKepala = kepala?.jabatan || 'Kepala Madrasah';
+  // ── Baris 1: Jabatan ──────────────────────────────────────────────────────
+  const jabatanKetua = kepala?.jabatan     || 'Ketua';
+  const jabatanSekr  = sekretaris?.jabatan || 'Sekretaris';
+
   doc.font(F_REG).fontSize(FS_ISI).fillColor('#000000')
-     .text(jabatanKepala + ',', blokX, y, { width: blokW, align: 'left' });
-  y = doc.y + 2;
+     .text(jabatanKetua + ',', xKetua, y, { width: colWKetua, align: 'left' });
+  doc.font(F_REG).fontSize(FS_ISI).fillColor('#000000')
+     .text(jabatanSekr + ',', xSekr, y, { width: colW, align: 'left' });
+  y = doc.y + 4;
 
-  // QR code
-  if (qrDataUrl) {
+  // ── Baris 2: QR di bawah jabatan Ketua ────────────────────────────────────
+  if (qrDataUrl && !dewanMasyayikh) {
+    // QR di kolom Ketua hanya jika tidak ada Dewan Masyayikh
     try {
-      doc.image(qrDataUrl, blokX, y, { width: qrSz, height: qrSz });
-      // Embed hyperlink agar QR bisa diklik di PDF reader
+      doc.image(qrDataUrl, xKetua, y, { width: qrSz, height: qrSz });
       const verifikasiUrl = `${getFrontendUrl()}/verifikasi/${surat.qrCodeToken}`;
-      doc.link(blokX, y, qrSz, qrSz, verifikasiUrl);
+      doc.link(xKetua, y, qrSz, qrSz, verifikasiUrl);
     } catch (_) {}
-    y += qrSz + 2;
+    y += qrSz + 4;
   } else {
     y += gapTtd;
   }
 
-  // Nama Kepala (bold, underline)
+  // ── Baris 3: Nama ─────────────────────────────────────────────────────────
+  const yName = y;
+
   if (kepala) {
     doc.font(F_BOLD).fontSize(FS_ISI).fillColor('#000000')
-       .text(kepala.namaLengkap || '', blokX, y, { width: blokW, align: 'left', underline: true });
-    y = doc.y + 2;
-    // NUPTK di bawah nama (jika ada)
+       .text(kepala.namaLengkap || '', xKetua, yName, { width: colWKetua, align: 'left' });
     if (kepala.nuptk) {
       doc.font(F_REG).fontSize(FS_ISI - 0.5).fillColor('#000000')
-         .text(`NUPTK: ${kepala.nuptk}`, blokX, y, { width: blokW, align: 'left' });
-      y = doc.y + 2;
+         .text(`NUPTK: ${kepala.nuptk}`, xKetua, doc.y + 1, { width: colWKetua, align: 'left' });
     }
   }
 
-  return y + 2;
+  if (sekretaris) {
+    doc.font(F_BOLD).fontSize(FS_ISI).fillColor('#000000')
+       .text(sekretaris.namaLengkap || '', xSekr, yName, { width: colW, align: 'left' });
+    if (sekretaris.nuptk) {
+      doc.font(F_REG).fontSize(FS_ISI - 0.5).fillColor('#000000')
+         .text(`NUPTK: ${sekretaris.nuptk}`, xSekr, doc.y + 1, { width: colW, align: 'left' });
+    }
+  }
+
+  let yAfterKolom = doc.y + 4;
+
+  // ── Blok Dewan Masyayikh — di bawah, tengah halaman ──────────────────────
+  if (dewanMasyayikh) {
+    const dmW = 180;
+    const dmX = ML + (CW - dmW) / 2;
+    let   yd  = yAfterKolom + 6;
+
+    // "Mengetahui:"
+    doc.font(F_REG).fontSize(FS_ISI).fillColor('#000000')
+       .text('Mengetahui:', dmX, yd, { width: dmW, align: 'left' });
+    yd = doc.y + 2;
+
+    // Jabatan
+    const jabatanDM = dewanMasyayikh.jabatan || 'Dewan Masyayikh';
+    doc.font(F_REG).fontSize(FS_ISI).fillColor('#000000')
+       .text(jabatanDM + ',', dmX, yd, { width: dmW, align: 'left' });
+    yd = doc.y + 4;
+
+    // QR (jika ada) di bawah jabatan Dewan Masyayikh
+    if (qrDataUrl) {
+      try {
+        doc.image(qrDataUrl, dmX, yd, { width: qrSz, height: qrSz });
+        const verifikasiUrl = `${getFrontendUrl()}/verifikasi/${surat.qrCodeToken}`;
+        doc.link(dmX, yd, qrSz, qrSz, verifikasiUrl);
+      } catch (_) {}
+      yd += qrSz + 4;
+    } else {
+      yd += gapTtd;
+    }
+
+    // Nama Dewan Masyayikh
+    doc.font(F_BOLD).fontSize(FS_ISI).fillColor('#000000')
+       .text(dewanMasyayikh.namaLengkap || '', dmX, yd, { width: dmW, align: 'left' });
+    if (dewanMasyayikh.nuptk) {
+      doc.font(F_REG).fontSize(FS_ISI - 0.5).fillColor('#000000')
+         .text(`NUPTK: ${dewanMasyayikh.nuptk}`, dmX, doc.y + 1, { width: dmW, align: 'left' });
+    }
+
+    return doc.y + 2;
+  }
+
+  return yAfterKolom;
 }
 
 // ── FOOTER HALAMAN BIASA (hanya nomor halaman) ───────────────────────────────
@@ -1190,7 +1258,7 @@ async function drawFooter(doc, surat, qrDataUrl, pageNum, totalPages) {
   const qrSz    = 55;
   const footerY = PH - 75;
   const verifikasiTxt =
-    'Dokumen ini ditandatangani dan distempel secara elektronik melalui Aplikasi Repositori Informasi Surat dan Administrasi Pesantren Sukamiskin (RISALATIN) MA YPP Sukamiskin' +
+    'Dokumen ini ditandatangani dan distempel secara elektronik melalui Aplikasi Repositori Informasi Surat dan Administrasi Pondok Pesantren (RISALATREN) Forum Pondok Pesantren (FPP) Kota Bandung' +
     ', untuk verifikasi surat scan atau klik QRCode.';
 
   // QR kiri bawah
@@ -1238,7 +1306,7 @@ function getNamaJenisSurat(kode) {
   return map[kode] || kode;
 }
 
-// ── HELPER: TITIMANGSA (tempat & tanggal) — format: "Bandung, tgl hijriyah" + tgl masehi
+// ── HELPER: TITIMANGSA (tempat & tanggal) — sejajar dengan kolom Ketua (kiri TTD)
 function drawTitimangsa(doc, surat, startY) {
   const hijriyah  = (surat.tanggalHijriyah || '').replace(/H\.?\s*$/, '').trim();
   const tglHijr   = hijriyah + ' H.';
@@ -1247,15 +1315,18 @@ function drawTitimangsa(doc, surat, startY) {
     : '';
   const tempat = surat.tempatTerbit || 'Bandung';
 
-  // Blok titimangsa sejajar dengan nama penandatangan (blokX sama dengan drawTandaTangan)
-  const blokW  = 200;
-  const blokX  = ML + CW - blokW;
+  // Sejajarkan dengan xSekr (posisi kolom Sekretaris di kanan)
+  // Rumus dari drawTandaTangan: colW=180, gapCol=CW-180*2, xSekr=ML+colW+gapCol
+  const colW   = 180;
+  const gapCol = CW - colW * 2;
+  const blokX  = ML + colW + gapCol;  // sama dengan xSekr
+  const blokW  = colW;
 
   // Hitung lebar prefix "Bandung, " agar baris kedua indent sejajar
   doc.font(F_REG).fontSize(FS_ISI);
-  const prefix     = `${tempat}, `;
-  const prefixW    = doc.widthOfString(prefix);
-  const tglHijrW   = blokW - prefixW;
+  const prefix   = `${tempat}, `;
+  const prefixW  = doc.widthOfString(prefix);
+  const tglW     = blokW - prefixW;
 
   let y = startY;
 
@@ -1263,17 +1334,17 @@ function drawTitimangsa(doc, surat, startY) {
   doc.font(F_REG).fontSize(FS_ISI).fillColor('#000000')
      .text(prefix, blokX, y, { width: prefixW, lineBreak: false });
   doc.font(F_REG).fontSize(FS_ISI).fillColor('#000000')
-     .text(tglHijr, blokX + prefixW, y, { width: tglHijrW });
+     .text(tglHijr, blokX + prefixW, y, { width: tglW });
   y = doc.y + 1;
 
   // Baris 2: tanggal masehi — indent sejajar dengan tanggal hijriyah
   if (tglMasehi) {
     doc.font(F_REG).fontSize(FS_ISI).fillColor('#000000')
-       .text(tglMasehi, blokX + prefixW, y, { width: tglHijrW });
+       .text(tglMasehi, blokX + prefixW, y, { width: tglW });
     y = doc.y + 1;
   }
 
-  return y + 2;  // dikurangi: +6 → +2
+  return y + 2;
 }
 
 // ── HELPER: TITIMANGSA SK (Ditetapkan di / Tanggal) ──────────────────────────
@@ -1285,8 +1356,11 @@ function drawTitimangsaSK(doc, surat, startY) {
     : '';
   const tempat     = surat.tempatTerbit || 'Bandung';
 
-  const blokW  = 200;
-  const blokX  = ML + CW - blokW;
+  // Sejajarkan dengan xSekr (kolom Sekretaris)
+  const colW   = 180;
+  const gapCol = CW - colW * 2;
+  const blokX  = ML + colW + gapCol;
+  const blokW  = colW;
   const labelW = 80;
   const colonX = blokX + labelW;
   const valX   = colonX + 8;
@@ -1314,7 +1388,7 @@ function drawTitimangsaSK(doc, surat, startY) {
     y = doc.y + 1;
   }
 
-  return y + 2;  // dikurangi: +6 → +2
+  return y + 2;
 }
 
 // ── LAYOUT 2: SURAT KHUSUS (C,D,E,F,G,H,I,J,K) ───────────────────────────────

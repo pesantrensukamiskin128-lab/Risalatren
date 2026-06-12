@@ -18,10 +18,12 @@ export const formatDateTime = (date) => {
 export const getStatusLabel = (status) => {
   const labels = {
     DRAFT: 'Draft',
-    MENUNGGU_TATA_USAHA: 'Menunggu Paraf TU',
-    MENUNGGU_KEPALA: 'Menunggu TTD Kepala',
-    DITOLAK_TATA_USAHA: 'Ditolak Tata Usaha',
-    DITOLAK_KEPALA: 'Ditolak Kepala',
+    MENUNGGU_SEKRETARIS: 'Menunggu Paraf Sekretaris',
+    MENUNGGU_KEPALA: 'Menunggu TTD Ketua',
+    MENUNGGU_DEWAN_MASYAYIKH: 'Menunggu TTD Dewan Masyayikh',
+    DITOLAK_SEKRETARIS: 'Ditolak Sekretaris',
+    DITOLAK_KEPALA: 'Ditolak Ketua',
+    DITOLAK_DEWAN_MASYAYIKH: 'Ditolak Dewan Masyayikh',
     SELESAI: 'Selesai',
     BARU: 'Baru',
     DIBACA: 'Dibaca',
@@ -33,10 +35,12 @@ export const getStatusLabel = (status) => {
 export const getStatusClass = (status) => {
   const classes = {
     DRAFT: 'status-draft',
-    MENUNGGU_TATA_USAHA: 'status-menunggu',
+    MENUNGGU_SEKRETARIS: 'status-menunggu',
     MENUNGGU_KEPALA: 'status-menunggu',
-    DITOLAK_TATA_USAHA: 'status-ditolak',
+    MENUNGGU_DEWAN_MASYAYIKH: 'status-menunggu',
+    DITOLAK_SEKRETARIS: 'status-ditolak',
     DITOLAK_KEPALA: 'status-ditolak',
+    DITOLAK_DEWAN_MASYAYIKH: 'status-ditolak',
     SELESAI: 'status-selesai',
     BARU: 'badge bg-blue-100 text-blue-800',
     DIBACA: 'badge bg-gray-100 text-gray-700',
@@ -48,9 +52,10 @@ export const getStatusClass = (status) => {
 export const getRoleLabel = (role) => {
   const labels = {
     ADMIN: 'Admin',
-    TATA_USAHA: 'Tata Usaha',
-    KEPALA: 'Kepala',
-    GURU: 'Guru',
+    SEKRETARIS: 'Sekretaris',
+    KEPALA: 'Ketua',
+    DEWAN_MASYAYIKH: 'Dewan Masyayikh',
+    PENGURUS: 'Pengurus',
   }
   return labels[role] || role
 }
@@ -58,9 +63,10 @@ export const getRoleLabel = (role) => {
 export const getRoleColor = (role) => {
   const colors = {
     ADMIN: 'bg-purple-100 text-purple-800',
-    TATA_USAHA: 'bg-blue-100 text-blue-800',
+    SEKRETARIS: 'bg-blue-100 text-blue-800',
     KEPALA: 'bg-primary-100 text-primary-800',
-    GURU: 'bg-gray-100 text-gray-700',
+    DEWAN_MASYAYIKH: 'bg-amber-100 text-amber-800',
+    PENGURUS: 'bg-gray-100 text-gray-700',
   }
   return colors[role] || 'bg-gray-100 text-gray-700'
 }

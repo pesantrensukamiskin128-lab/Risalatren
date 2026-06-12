@@ -1,8 +1,8 @@
-# RISALATIN - Script Setup Otomatis
+# RISALATREN - Script Setup Otomatis
 # Pastikan Node.js dan MySQL sudah terinstall
 
 Write-Host "========================================" -ForegroundColor Green
-Write-Host "  RISALATIN - Setup Otomatis" -ForegroundColor Green
+Write-Host "  RISALATREN - Setup Otomatis" -ForegroundColor Green
 Write-Host "========================================" -ForegroundColor Green
 Write-Host ""
 
@@ -55,7 +55,7 @@ if (Test-Path .env) {
     Write-Host "  Membuat file .env dari .env.example..." -ForegroundColor Yellow
     Copy-Item .env.example .env
     Write-Host "  PENTING: Edit backend/.env dan sesuaikan DATABASE_URL!" -ForegroundColor Red
-    Write-Host "  Format: mysql://USER:PASSWORD@localhost:3306/safira_db" -ForegroundColor Yellow
+    Write-Host "  Format: mysql://USER:PASSWORD@localhost:3306/risalatren_db" -ForegroundColor Yellow
     Write-Host ""
     Write-Host "  Tekan Enter setelah selesai edit .env..." -ForegroundColor Yellow
     Read-Host
@@ -106,7 +106,7 @@ Write-Host "  1. Terminal 1: cd backend && npm run dev" -ForegroundColor White
 Write-Host "  2. Terminal 2: cd frontend && npm run dev" -ForegroundColor White
 Write-Host ""
 Write-Host "Login default:" -ForegroundColor Cyan
-Write-Host "  Email: admin@sirama.com" -ForegroundColor White
+Write-Host "  Email: admin@risalatren.com" -ForegroundColor White
 Write-Host "  Password: admin123" -ForegroundColor White
 Write-Host ""
 Write-Host "Akses aplikasi: http://localhost:5173" -ForegroundColor Green

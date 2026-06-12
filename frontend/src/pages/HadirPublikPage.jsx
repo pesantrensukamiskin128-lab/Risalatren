@@ -86,7 +86,7 @@ export default function HadirPublikPage() {
           </div>
           <div>
             <label className="label">Asal Instansi / Utusan</label>
-            <input className="input" placeholder="Contoh: PC Fatayat NU Kota Bandung" value={form.instansi} onChange={e => setForm(f => ({ ...f, instansi: e.target.value }))} />
+            <input className="input" placeholder="Contoh: Forum Pondok Pesantren (FPP) Kota Bandung" value={form.instansi} onChange={e => setForm(f => ({ ...f, instansi: e.target.value }))} />
           </div>
           <div>
             <label className="label">Jabatan</label>

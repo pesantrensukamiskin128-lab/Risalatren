@@ -13,6 +13,7 @@ const verifySurat = async (req, res) => {
         pembuat: { select: { namaLengkap: true, jabatan: true } },
         tataUsaha: { select: { namaLengkap: true, jabatan: true } },
         kepala: { select: { namaLengkap: true, jabatan: true } },
+        dewanMasyayikh: { select: { namaLengkap: true, jabatan: true } },
         penerimaInternal: {
           include: {
             user: { select: { namaLengkap: true, jabatan: true } }
@@ -49,7 +50,7 @@ const verifySurat = async (req, res) => {
         tanggalMasehi: surat.tanggalMasehi,
         tanggalHijriyah: surat.tanggalHijriyah,
         penandatangan: {
-          tataUsaha: surat.tataUsaha ? {
+          sekretaris: surat.tataUsaha ? {
             nama: surat.tataUsaha.namaLengkap,
             jabatan: surat.tataUsaha.jabatan,
             tanggalParaf: surat.tglParafTataUsaha,
@@ -59,16 +60,21 @@ const verifySurat = async (req, res) => {
             jabatan: surat.kepala.jabatan,
             tanggalTtd: surat.tglTtdKepala,
           } : null,
+          dewanMasyayikh: surat.dewanMasyayikh ? {
+            nama: surat.dewanMasyayikh.namaLengkap,
+            jabatan: surat.dewanMasyayikh.jabatan,
+            tanggalTtd: surat.tglTtdDewanMasyayikh,
+          } : null,
         },
         organisasi: {
           tingkatan: organisasi?.tingkatanOrg || '',
-          nama: organisasi?.namaOrg || 'Fatayat NU',
+          nama: organisasi?.namaOrg || 'Forum Pondok Pesantren (FPP) Kota Bandung',
           daerah: organisasi?.daerahOrg || '',
           alamat: organisasi?.alamat || '',
           logoPath: organisasi?.logoPath || null,
         },
         dibuatOleh: surat.pembuat.namaLengkap,
-        tanggalSelesai: surat.tglTtdKepala || surat.tglParafTataUsaha,
+        tanggalSelesai: surat.tglTtdDewanMasyayikh || surat.tglTtdKepala || surat.tglParafTataUsaha,
       }
     });
   } catch (error) {
@@ -89,9 +95,10 @@ const previewPDFPublik = async (req, res) => {
     const surat = await prisma.suratKeluar.findUnique({
       where: { qrCodeToken: token },
       include: {
-        pembuat:   { select: { namaLengkap: true, jabatan: true } },
-        tataUsaha: { select: { namaLengkap: true, jabatan: true } },
-        kepala:    { select: { namaLengkap: true, jabatan: true } },
+        pembuat:        { select: { namaLengkap: true, jabatan: true } },
+        tataUsaha:      { select: { namaLengkap: true, jabatan: true } },
+        kepala:         { select: { namaLengkap: true, jabatan: true } },
+        dewanMasyayikh: { select: { namaLengkap: true, jabatan: true } },
         penerimaInternal: {
           include: { user: { select: { namaLengkap: true, jabatan: true } } }
         },

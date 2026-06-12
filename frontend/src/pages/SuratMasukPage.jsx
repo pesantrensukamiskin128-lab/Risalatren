@@ -95,8 +95,8 @@ export default function SuratMasukPage() {
   const [search, setSearch] = useState('')
   const [deleteId, setDeleteId] = useState(null)
 
-  const isGuru    = user?.role === 'GURU'
-  const canManage = ['ADMIN', 'TATA_USAHA', 'KEPALA'].includes(user?.role)
+  const isGuru    = user?.role === 'PENGURUS'
+  const canManage = ['ADMIN', 'SEKRETARIS', 'KEPALA'].includes(user?.role)
 
   const { data, isLoading } = useQuery({
     queryKey: ['surat-masuk', search],
@@ -149,7 +149,7 @@ export default function SuratMasukPage() {
         {/* Tampilan khusus GURU */}
         {isGuru && <SuratMasukPengurus search={search} />}
 
-        {/* Tampilan ADMIN/TATA_USAHA/KEPALA */}
+        {/* Tampilan ADMIN/SEKRETARIS/KEPALA */}
         {!isGuru && (
           isLoading ? (
             <PageLoader />

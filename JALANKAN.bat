@@ -1,11 +1,11 @@
 @echo off
-title RISALATIN - Menjalankan Server
+title RISALATREN - Menjalankan Server
 color 0A
 
 echo.
 echo  ============================================
-echo    RISALATIN - Repositori Informasi Surat
-echo    dan Administrasi Pesantren
+echo    RISALATREN - Repositori Informasi Surat
+echo    dan Administrasi Pondok Pesantren
 echo  ============================================
 echo.
 
@@ -28,13 +28,13 @@ echo       MySQL OK
 
 :: Jalankan Backend
 echo [2/3] Menjalankan Backend (port 5000)...
-start "RISALATIN Backend" cmd /k "cd /d %~dp0backend && node src/server.js"
+start "RISALATREN Backend" cmd /k "cd /d %~dp0backend && node src/server.js"
 timeout /t 3 /nobreak >nul
 echo       Backend OK
 
 :: Jalankan Frontend
 echo [3/3] Menjalankan Frontend (port 5173)...
-start "RISALATIN Frontend" cmd /k "cd /d %~dp0frontend && npm run dev"
+start "RISALATREN Frontend" cmd /k "cd /d %~dp0frontend && npm run dev"
 timeout /t 5 /nobreak >nul
 echo       Frontend OK
 
@@ -45,9 +45,9 @@ echo    Buka browser: http://localhost:5173
 echo  ============================================
 echo.
 echo  Login default:
-echo    Admin      : admin@sirama.com / admin123
-echo    Tata Usaha : tatausaha@sirama.com / password123
-echo    Kepala     : kepala@sirama.com / password123
+echo    Admin      : admin@risalatren.com / admin123
+echo    Sekretaris : sekretaris@risalatren.com / password123
+echo    Kepala     : kepala@risalatren.com / password123
 echo.
 
 :: Buka browser otomatis

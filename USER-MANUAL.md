@@ -1,9 +1,9 @@
-# USER MANUAL APLIKASI SAFIRA
-## Sistem Administrasi Fatayat untuk Informasi Risalah dan Arsip
+# USER MANUAL APLIKASI RISALATREN
+## Repositori Informasi Surat dan Administrasi Pondok Pesantren
 
 **Versi:** 1.0.0  
 **Tahun:** 2026  
-**Organisasi:** Fatayat Nahdlatul Ulama
+**Organisasi:** Forum Pondok Pesantren (FPP) Kota Bandung
 
 ---
 
@@ -29,7 +29,7 @@
 ---
 ## 1. PENDAHULUAN
 
-SAFIRA (Sistem Administrasi Fatayat untuk Informasi Risalah dan Arsip) adalah aplikasi manajemen persuratan digital berbasis web untuk organisasi Fatayat Nahdlatul Ulama.
+RISALATREN (Repositori Informasi Surat dan Administrasi Pondok Pesantren) adalah aplikasi manajemen persuratan digital berbasis web untuk Forum Pondok Pesantren (FPP) Kota Bandung.
 
 Fitur utama:
 - Pembuatan dan pengelolaan **surat keluar** dengan alur tanda tangan elektronik berjenjang
@@ -51,7 +51,7 @@ Fitur utama:
 
 ### Membuka Aplikasi
 
-Buka browser dan akses alamat aplikasi SAFIRA yang telah disediakan.
+Buka browser dan akses alamat aplikasi RISALATREN yang telah disediakan.
 
 ### Login
 
@@ -69,7 +69,7 @@ Klik foto profil atau nama Anda di pojok kanan atas, lalu pilih **Keluar**.
 
 ## 3. PERAN PENGGUNA (ROLE)
 
-Aplikasi SAFIRA memiliki 4 peran pengguna:
+Aplikasi RISALATREN memiliki 4 peran pengguna:
 
 | Peran | Deskripsi |
 |-------|-----------|
@@ -337,7 +337,7 @@ Fitur presensi memungkinkan pencatatan kehadiran peserta pada agenda kegiatan se
 
 ### 9.2 Presensi via Formulir Publik (Tanpa Login)
 
-Untuk tamu atau peserta yang tidak memiliki akun SAFIRA:
+Untuk tamu atau peserta yang tidak memiliki akun RISALATREN:
 
 1. Scan QR Code agenda
 2. Jika tidak login, akan diarahkan ke halaman **Formulir Presensi Publik**
@@ -670,7 +670,7 @@ Setelah instalasi pertama, sistem menyediakan akun Admin bawaan:
 
 | Field | Nilai |
 |-------|-------|
-| **Email** | admin@safira.com |
+| **Email** | admin@risalatren.com |
 | **Password** | admin123 |
 | **Role** | Admin |
 
@@ -731,4 +731,4 @@ Setelah instalasi pertama, sistem menyediakan akun Admin bawaan:
 
 ---
 
-*User Manual SAFIRA v1.0.0 — © 2026 Fatayat Nahdlatul Ulama*
+*User Manual RISALATREN v1.0.0 — © 2026 Forum Pondok Pesantren (FPP) Kota Bandung*

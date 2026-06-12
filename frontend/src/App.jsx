@@ -73,11 +73,11 @@ function App() {
           <Route index element={<Navigate to="/dashboard" replace />} />
           <Route path="dashboard" element={<DashboardPage />} />
           
-          {/* Surat Keluar - hanya ADMIN, TATA_USAHA, KEPALA */}
+          {/* Surat Keluar - hanya ADMIN, SEKRETARIS, KEPALA, DEWAN_MASYAYIKH */}
           <Route 
             path="surat-keluar" 
             element={
-              <ProtectedRoute roles={['ADMIN', 'TATA_USAHA', 'KEPALA']}>
+              <ProtectedRoute roles={['ADMIN', 'SEKRETARIS', 'KEPALA', 'DEWAN_MASYAYIKH']}>
                 <SuratKeluarPage />
               </ProtectedRoute>
             } 
@@ -105,7 +105,7 @@ function App() {
           <Route 
             path="surat-masuk/tambah" 
             element={
-              <ProtectedRoute roles={['ADMIN', 'TATA_USAHA', 'KEPALA']}>
+              <ProtectedRoute roles={['ADMIN', 'SEKRETARIS', 'KEPALA']}>
                 <SuratMasukFormPage />
               </ProtectedRoute>
             } 
@@ -113,7 +113,7 @@ function App() {
           <Route 
             path="surat-masuk/edit/:id" 
             element={
-              <ProtectedRoute roles={['ADMIN', 'TATA_USAHA', 'KEPALA']}>
+              <ProtectedRoute roles={['ADMIN', 'SEKRETARIS', 'KEPALA']}>
                 <SuratMasukFormPage />
               </ProtectedRoute>
             } 

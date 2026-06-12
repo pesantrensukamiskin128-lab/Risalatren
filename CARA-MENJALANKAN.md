@@ -1,10 +1,10 @@
-# 🎉 SAFIRA Berhasil Diinstall!
+# 🎉 RISALATREN Berhasil Diinstall!
 
 ## ✅ Status Instalasi
 
 - ✅ Node.js v24.15.0 terinstall
-- ✅ PostgreSQL 16 terinstall dan berjalan
-- ✅ Database `safira_db` dibuat
+- ✅ MySQL terinstall dan berjalan
+- ✅ Database `risalatren_db` dibuat
 - ✅ Backend dependencies terinstall
 - ✅ Frontend dependencies terinstall
 - ✅ Migrasi database selesai
@@ -25,11 +25,11 @@ http://localhost:5173
 
 | Role | Email | Password |
 |------|-------|----------|
-| **Admin** | admin@safira.com | admin123 |
-| Sekretaris | sekretaris@safira.com | password123 |
-| Ketua | ketua@safira.com | password123 |
-| Pengurus 1 | pengurus1@safira.com | password123 |
-| Pengurus 2 | pengurus2@safira.com | password123 |
+| **Admin** | admin@risalatren.com | admin123 |
+| Sekretaris | sekretaris@risalatren.com | password123 |
+| Kepala | kepala@risalatren.com | password123 |
+| Guru 1 | guru1@risalatren.com | password123 |
+| Guru 2 | guru2@risalatren.com | password123 |
 
 > ⚠️ **PENTING**: Segera ubah password setelah login pertama!
 
@@ -89,7 +89,7 @@ npm run dev
 ### 6. **Manajemen User** (Admin)
 - Tambah/edit/hapus user
 - Reset password user
-- Atur role: Admin, Sekretaris, Ketua, Pengurus
+- Atur role: Admin, Sekretaris, Ketua, Guru
 
 ### 7. **Profil Organisasi** (Admin)
 - Upload logo organisasi
@@ -110,7 +110,7 @@ npm run dev
 - ✅ Rich text editor lengkap
 - ✅ Support teks Arab (RTL)
 - ✅ Support pembuatan tabel
-- ✅ Dark mode ready
+- ✅ Progressive Web App (PWA)
 
 ---
 
@@ -118,11 +118,11 @@ npm run dev
 
 ### Backend tidak jalan?
 ```powershell
-# Cek apakah PostgreSQL berjalan
-Get-Service -Name "postgresql*"
+# Cek apakah MySQL berjalan
+Get-Service -Name "mysql*"
 
 # Jika stopped, start service
-Start-Service postgresql-x64-16
+Start-Service MySQL80
 ```
 
 ### Frontend error?
@@ -137,7 +137,7 @@ npm install
 ```powershell
 cd backend
 node prisma/seed.js
-# Ini akan reset password admin ke admin123
+# Pastikan akun admin@risalatren.com belum ada, atau hapus dulu dari DB
 ```
 
 ---
@@ -154,11 +154,11 @@ Jika ada masalah, cek:
 ## 🎯 Alur Kerja Surat Keluar
 
 1. **Admin** → Buat surat → Pilih penandatangan → Kirim
-2. **Sekretaris** → Lihat surat → Tanda tangan / Tolak
-3. **Ketua** → Lihat surat → Tanda tangan (verifikasi akhir)
+2. **Sekretaris** → Lihat surat → Paraf / Tolak
+3. **Kepala** → Lihat surat → Tanda tangan (verifikasi akhir)
 4. **Selesai** → QR Code generated → Download PDF → Kirim ke penerima
 5. **Penerima** → Scan QR Code → Verifikasi keaslian
 
 ---
 
-**SAFIRA © 2026 — Sistem Administrasi Persuratan Digital**
+**RISALATREN © 2026 — Forum Pondok Pesantren (FPP) Kota Bandung**

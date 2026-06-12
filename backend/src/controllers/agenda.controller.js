@@ -20,7 +20,7 @@ const getAllAgenda = async (req, res) => {
 
     let where = {};
     // GURU hanya lihat agenda yang mereka diundang
-    if (req.user.role === 'GURU') {
+    if (req.user.role === 'PENGURUS') {
       where.peserta = { some: { userId: req.user.id } };
     }
     if (search) {
@@ -46,7 +46,7 @@ const getAllAgenda = async (req, res) => {
 const getUpcomingAgenda = async (req, res) => {
   try {
     let where = { tanggal: { gte: new Date() } };
-    if (req.user.role === 'GURU') {
+    if (req.user.role === 'PENGURUS') {
       where.peserta = { some: { userId: req.user.id } };
     }
     const agenda = await prisma.agenda.findMany({

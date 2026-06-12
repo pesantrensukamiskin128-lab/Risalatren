@@ -30,19 +30,19 @@ export default function DashboardPage() {
   const { data: recentKeluar } = useQuery({
     queryKey: ['recent-keluar'],
     queryFn: () => suratKeluarAPI.getAll({ limit: 5 }).then(r => r.data.data),
-    enabled: user?.role !== 'GURU',
+    enabled: user?.role !== 'PENGURUS',
   })
 
   const { data: recentMasukGuru } = useQuery({
     queryKey: ['recent-masuk-guru'],
     queryFn: () => suratKeluarAPI.getAll({ limit: 5, status: 'SELESAI' }).then(r => r.data.data),
-    enabled: user?.role === 'GURU',
+    enabled: user?.role === 'PENGURUS',
   })
 
   const { data: myDisposisi } = useQuery({
     queryKey: ['my-disposisi-unread'],
     queryFn: () => disposisiAPI.getMy({ sudahDibaca: false }).then(r => r.data.data),
-    enabled: ['GURU', 'TATA_USAHA', 'KEPALA'].includes(user?.role),
+    enabled: ['PENGURUS', 'SEKRETARIS', 'KEPALA', 'DEWAN_MASYAYIKH'].includes(user?.role),
   })
 
   const { data: upcomingAgenda } = useQuery({
@@ -73,7 +73,7 @@ export default function DashboardPage() {
       </motion.div>
 
       {/* Stats Grid */}
-      {(user?.role === 'ADMIN' || user?.role === 'TATA_USAHA' || user?.role === 'KEPALA') && (
+      {(user?.role === 'ADMIN' || user?.role === 'SEKRETARIS' || user?.role === 'KEPALA' || user?.role === 'DEWAN_MASYAYIKH') && (
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           <StatsCard title="Total Surat Keluar" value={statKeluar?.total} icon={DocumentTextIcon} color="green" delay={0.1} />
           <StatsCard title="Menunggu TTD" value={statKeluar?.menunggu} icon={ClockIcon} color="yellow" delay={0.15} />
@@ -107,7 +107,7 @@ export default function DashboardPage() {
       )}
 
       <div className="grid lg:grid-cols-2 gap-6">
-        {/* Recent Surat — Surat Keluar Terbaru (Admin/Tata Usaha/Kepala) atau Surat Masuk Terbaru (Guru) */}
+        {/* Recent Surat — Surat Keluar Terbaru (Admin/Sekretaris/Ketua) atau Surat Masuk Terbaru (Guru) */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -116,10 +116,10 @@ export default function DashboardPage() {
         >
           <div className="card-header flex items-center justify-between">
             <h2 className="section-title">
-              {user?.role === 'GURU' ? 'Surat Masuk Terbaru' : 'Surat Keluar Terbaru'}
+              {user?.role === 'PENGURUS' ? 'Surat Masuk Terbaru' : 'Surat Keluar Terbaru'}
             </h2>
             <Link
-              to={user?.role === 'GURU' ? '/surat-masuk' : '/surat-keluar'}
+              to={user?.role === 'PENGURUS' ? '/surat-masuk' : '/surat-keluar'}
               className="text-xs text-primary-600 hover:text-primary-700 flex items-center gap-1"
             >
               Lihat semua <ArrowRightIcon className="w-3 h-3" />
@@ -127,7 +127,7 @@ export default function DashboardPage() {
           </div>
           <div className="divide-y divide-gray-50">
             {/* Tampilan GURU */}
-            {user?.role === 'GURU' && (
+            {user?.role === 'PENGURUS' && (
               <>
                 {(!recentMasukGuru || recentMasukGuru.length === 0) && (
                   <div className="p-6 text-center text-sm text-gray-400">Belum ada surat</div>
@@ -153,8 +153,8 @@ export default function DashboardPage() {
               </>
             )}
 
-            {/* Tampilan ADMIN/TATA_USAHA/KEPALA */}
-            {user?.role !== 'GURU' && (
+            {/* Tampilan ADMIN/SEKRETARIS/KEPALA */}
+            {user?.role !== 'PENGURUS' && (
               <>
                 {(!recentKeluar || recentKeluar.length === 0) && (
                   <div className="p-6 text-center text-sm text-gray-400">Belum ada surat</div>
@@ -217,7 +217,7 @@ export default function DashboardPage() {
           </div>
 
           {/* Surat keluar stats */}
-          {(user?.role === 'ADMIN' || user?.role === 'TATA_USAHA' || user?.role === 'KEPALA') && (
+          {(user?.role === 'ADMIN' || user?.role === 'SEKRETARIS' || user?.role === 'KEPALA' || user?.role === 'DEWAN_MASYAYIKH') && (
             <div className="card p-5">
               <h3 className="section-title mb-4">Status Surat Keluar</h3>
               <div className="space-y-3">

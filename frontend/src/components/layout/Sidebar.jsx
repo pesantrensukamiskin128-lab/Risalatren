@@ -12,17 +12,17 @@ import { useQuery } from '@tanstack/react-query'
 import { organisasiAPI, getUploadUrl } from '../../services/api'
 
 const navItems = [
-  { to: '/dashboard', icon: HomeIcon, label: 'Dashboard', roles: ['ADMIN', 'TATA_USAHA', 'KEPALA', 'GURU'] },
-  { to: '/surat-keluar', icon: DocumentTextIcon, label: 'Surat Keluar', roles: ['ADMIN', 'TATA_USAHA', 'KEPALA'] },
+  { to: '/dashboard', icon: HomeIcon, label: 'Dashboard', roles: ['ADMIN', 'SEKRETARIS', 'KEPALA', 'PENGURUS'] },
+  { to: '/surat-keluar', icon: DocumentTextIcon, label: 'Surat Keluar', roles: ['ADMIN', 'SEKRETARIS', 'KEPALA', 'DEWAN_MASYAYIKH'] },
   { to: '/template-surat', icon: DocumentDuplicateIcon, label: 'Template Surat', roles: ['ADMIN'] },
-  { to: '/surat-masuk', icon: InboxIcon, label: 'Surat Masuk', roles: ['ADMIN', 'TATA_USAHA', 'KEPALA', 'GURU'] },
-  { to: '/disposisi', icon: ClipboardDocumentListIcon, label: 'Disposisi', roles: ['ADMIN', 'TATA_USAHA', 'KEPALA', 'GURU'] },
-  { to: '/agenda', icon: CalendarDaysIcon, label: 'Agenda Kegiatan', roles: ['ADMIN', 'TATA_USAHA', 'KEPALA', 'GURU'] },
-  { to: '/riwayat-presensi', icon: ClockIcon, label: 'Riwayat Presensi', roles: ['ADMIN', 'TATA_USAHA', 'KEPALA', 'GURU'] },
-  { to: '/scan-qr', icon: QrCodeIcon, label: 'Scan QR', roles: ['ADMIN', 'TATA_USAHA', 'KEPALA', 'GURU'] },
+  { to: '/surat-masuk', icon: InboxIcon, label: 'Surat Masuk', roles: ['ADMIN', 'SEKRETARIS', 'KEPALA', 'PENGURUS'] },
+  { to: '/disposisi', icon: ClipboardDocumentListIcon, label: 'Disposisi', roles: ['ADMIN', 'SEKRETARIS', 'KEPALA', 'PENGURUS'] },
+  { to: '/agenda', icon: CalendarDaysIcon, label: 'Agenda Kegiatan', roles: ['ADMIN', 'SEKRETARIS', 'KEPALA', 'PENGURUS'] },
+  { to: '/riwayat-presensi', icon: ClockIcon, label: 'Riwayat Presensi', roles: ['ADMIN', 'SEKRETARIS', 'KEPALA', 'PENGURUS'] },
+  { to: '/scan-qr', icon: QrCodeIcon, label: 'Scan QR', roles: ['ADMIN', 'SEKRETARIS', 'KEPALA', 'PENGURUS'] },
   { to: '/rekap', icon: ChartBarIcon, label: 'Rekap Surat', roles: ['ADMIN'] },
   { to: '/manajemen-user', icon: UsersIcon, label: 'Manajemen User', roles: ['ADMIN'] },
-  { to: '/profil-organisasi', icon: BuildingOfficeIcon, label: 'Profil Yayasan', roles: ['ADMIN'] },
+  { to: '/profil-organisasi', icon: BuildingOfficeIcon, label: 'Profil Organisasi', roles: ['ADMIN'] },
 ]
 
 export default function Sidebar({ isOpen, onClose }) {
@@ -57,9 +57,9 @@ export default function Sidebar({ isOpen, onClose }) {
         </div>
         <div className="min-w-0">
           <p className="font-bold text-primary-900 text-sm leading-tight truncate">
-            RISALATIN
+            RISALATREN
           </p>
-          <p className="text-xs text-gray-400 truncate">Pesantren Sukamiskin</p>
+          <p className="text-xs text-gray-400 truncate">Forum Pondok Pesantren (FPP) Kota Bandung</p>
         </div>
         {/* Close button mobile */}
         <button

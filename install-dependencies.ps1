@@ -1,8 +1,8 @@
-# RISALATIN - Script Instalasi Dependensi
+# RISALATREN - Script Instalasi Dependensi
 # Jalankan sebagai Administrator di PowerShell
 
 Write-Host "========================================" -ForegroundColor Green
-Write-Host "  RISALATIN - Instalasi Dependensi" -ForegroundColor Green
+Write-Host "  RISALATREN - Instalasi Dependensi" -ForegroundColor Green
 Write-Host "========================================" -ForegroundColor Green
 Write-Host ""
 
@@ -29,5 +29,5 @@ Write-Host ""
 Write-Host "========================================" -ForegroundColor Green
 Write-Host "  Instalasi selesai!" -ForegroundColor Green
 Write-Host "  PENTING: Tutup dan buka ulang terminal" -ForegroundColor Yellow
-Write-Host "  lalu jalankan: .\setup-safira.ps1" -ForegroundColor Yellow
+Write-Host "  lalu jalankan: .\setup-risalatren.ps1" -ForegroundColor Yellow
 Write-Host "========================================" -ForegroundColor Green

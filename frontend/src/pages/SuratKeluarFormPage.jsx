@@ -66,6 +66,7 @@ const defaultForm = {
   tempatTerbit: 'Bandung',
   tataUsahaId: '',
   kepalaId: '',
+  dewanMasyayikhId: '',
   penerimaEksternal: '',
   penerimaInternalIds: [],
 }
@@ -90,9 +91,14 @@ export default function SuratKeluarFormPage() {
     enabled: isEdit,
   })
 
-  const { data: tataUsahaList } = useQuery({
-    queryKey: ['users-tata-usaha'],
-    queryFn: () => userAPI.getByRole('TATA_USAHA').then(r => r.data.data),
+  const { data: sekretarisList } = useQuery({
+    queryKey: ['users-sekretaris'],
+    queryFn: () => userAPI.getByRole('SEKRETARIS').then(r => r.data.data),
+  })
+
+  const { data: dewanMasyayikhList } = useQuery({
+    queryKey: ['users-dewan-masyayikh'],
+    queryFn: () => userAPI.getByRole('DEWAN_MASYAYIKH').then(r => r.data.data),
   })
 
   const { data: templates } = useQuery({
@@ -122,6 +128,7 @@ export default function SuratKeluarFormPage() {
         tempatTerbit:        existingSurat.tempatTerbit         || 'Bandung',
         tataUsahaId:         existingSurat.tataUsahaId          || '',
         kepalaId:            existingSurat.kepalaId             || '',
+        dewanMasyayikhId:    existingSurat.dewanMasyayikhId     || '',
         penerimaEksternal:   existingSurat.penerimaEksternal    || '',
         penerimaInternalIds: existingSurat.penerimaInternal?.map(p => p.userId) || [],
       })
@@ -163,7 +170,7 @@ export default function SuratKeluarFormPage() {
     if (!form.perihal.trim())                        { toast.error('Perihal harus diisi'); return }
     if (!form.isiSurat || form.isiSurat === '<p></p>') { toast.error('Isi surat harus diisi'); return }
     if (!form.tanggalMasehi)                         { toast.error('Tanggal harus diisi'); return }
-    if (!isDraft && !form.tataUsahaId)              { toast.error('Pilih Tata Usaha terlebih dahulu'); return }
+    if (!isDraft && !form.tataUsahaId)              { toast.error('Pilih Sekretaris terlebih dahulu'); return }
     saveMutation.mutate({ ...form, isDraft })
   }
 
@@ -333,7 +340,7 @@ export default function SuratKeluarFormPage() {
             </div>
             <textarea
               className="input-field min-h-[80px] resize-none"
-              placeholder={"Guru dan Staf MA YPP Sukamiskin"}
+              placeholder={"Pengurus dan Ustadz/Ustadzah Pondok Pesantren"}
               value={form.tujuanSurat}
               onChange={e => setForm(p => ({ ...p, tujuanSurat: e.target.value }))}
             />
@@ -369,28 +376,38 @@ export default function SuratKeluarFormPage() {
           <div className="card card-body space-y-4">
             <h2 className="section-title">Penandatangan</h2>
             <div>
-              <label className="label">Tata Usaha (Pemberi Paraf)</label>
+              <label className="label">Sekretaris (Penandatangan)</label>
               <select className="input-field" value={form.tataUsahaId}
                 onChange={e => setForm(p => ({ ...p, tataUsahaId: e.target.value }))}>
-                <option value="">— Pilih Tata Usaha —</option>
-                {tataUsahaList?.map(u => (
+                <option value="">— Pilih Sekretaris —</option>
+                {sekretarisList?.map(u => (
                   <option key={u.id} value={u.id}>{u.namaLengkap}</option>
                 ))}
               </select>
             </div>
             <div>
-              <label className="label">Kepala (Penandatangan)</label>
+              <label className="label">Ketua (Penandatangan)</label>
               <select className="input-field" value={form.kepalaId}
                 onChange={e => setForm(p => ({ ...p, kepalaId: e.target.value }))}>
-                <option value="">— Pilih Kepala —</option>
+                <option value="">— Pilih Ketua —</option>
                 {kepalaList?.map(u => (
+                  <option key={u.id} value={u.id}>{u.namaLengkap}</option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label className="label">Dewan Masyayikh <span className="text-xs text-gray-400">(opsional)</span></label>
+              <select className="input-field" value={form.dewanMasyayikhId}
+                onChange={e => setForm(p => ({ ...p, dewanMasyayikhId: e.target.value }))}>
+                <option value="">— Tanpa Dewan Masyayikh —</option>
+                {dewanMasyayikhList?.map(u => (
                   <option key={u.id} value={u.id}>{u.namaLengkap}</option>
                 ))}
               </select>
             </div>
             <div className="bg-gray-50 rounded-lg p-3 text-xs text-gray-500">
               <p className="font-medium text-gray-700 mb-1">Alur penandatanganan:</p>
-              <p>1. Tata Usaha memberi paraf → 2. Kepala menandatangani</p>
+              <p>1. Sekretaris menandatangani → 2. Ketua menandatangani{form.dewanMasyayikhId ? ' → 3. Dewan Masyayikh menandatangani' : ''}</p>
             </div>
           </div>
 
@@ -463,7 +480,7 @@ export default function SuratKeluarFormPage() {
             <button onClick={() => handleSubmit(false)} disabled={saveMutation.isPending}
               className="btn-primary w-full justify-center">
               <DocumentCheckIcon className="w-4 h-4" />
-              {saveMutation.isPending ? 'Mengirim...' : 'Kirim ke Tata Usaha'}
+              {saveMutation.isPending ? 'Mengirim...' : 'Kirim ke Sekretaris'}
             </button>
           </div>
         </div>

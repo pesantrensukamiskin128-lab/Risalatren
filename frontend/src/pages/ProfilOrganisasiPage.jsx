@@ -119,13 +119,13 @@ export default function ProfilOrganisasiPage() {
 
         {/* Identitas Organisasi */}
         <div className="card card-body space-y-4">
-          <h2 className="section-title">Identitas Lembaga</h2>
+          <h2 className="section-title">Identitas Organisasi</h2>
           <p className="text-xs text-gray-400 -mt-2">
             Data ini digunakan untuk kop surat dan nomor surat otomatis
           </p>
 
           <div>
-            <label className="label">Nama Yayasan<span className="text-red-500">*</span></label>
+            <label className="label">Tingkatan Organisasi<span className="text-red-500">*</span></label>
             <input type="text" className="input-field"
               placeholder="contoh: Pimpinan Cabang"
               value={form.tingkatanOrg}
@@ -135,7 +135,7 @@ export default function ProfilOrganisasiPage() {
 
           <div>
             <label className="label">
-              Nama Arab Yayasan
+              Nama Arab Organisasi
               <span className="ml-2 text-xs font-normal text-gray-400">(opsional — tampil di kop surat dengan font Naskh)</span>
             </label>
             <input
@@ -151,16 +151,16 @@ export default function ProfilOrganisasiPage() {
           </div>
 
           <div>
-            <label className="label">Nama Lembaga <span className="text-red-500">*</span></label>
+            <label className="label">Nama Organisasi <span className="text-red-500">*</span></label>
             <input type="text" className="input-field"
-              placeholder="contoh: Fatayat Nahdlatul Ulama"
+              placeholder="contoh: Forum Pondok Pesantren"
               value={form.namaOrg}
               onChange={e => setForm(p => ({ ...p, namaOrg: e.target.value }))} />
             <p className="text-xs text-gray-400 mt-1">Singkatan: <strong>{form.namaOrg.split(' ').map(w=>w[0]?.toUpperCase()||'').join('')}</strong></p>
           </div>
 
           <div>
-            <label className="label">Daerah Lembaga</label>
+            <label className="label">Daerah Organisasi</label>
             <input type="text" className="input-field"
               placeholder="contoh: Kota Bandung"
               value={form.daerahOrg}

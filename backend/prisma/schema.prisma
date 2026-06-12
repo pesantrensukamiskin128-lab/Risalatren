@@ -9,17 +9,20 @@ datasource db {
 
 enum Role {
   ADMIN
-  TATA_USAHA
+  SEKRETARIS
   KEPALA
-  GURU
+  DEWAN_MASYAYIKH
+  PENGURUS
 }
 
 enum SuratStatus {
   DRAFT
-  MENUNGGU_TATA_USAHA
+  MENUNGGU_SEKRETARIS
   MENUNGGU_KEPALA
-  DITOLAK_TATA_USAHA
+  MENUNGGU_DEWAN_MASYAYIKH
+  DITOLAK_SEKRETARIS
   DITOLAK_KEPALA
+  DITOLAK_DEWAN_MASYAYIKH
   SELESAI
 }
 
@@ -106,7 +109,7 @@ model User {
   jabatan       String    @default("")
   nomorHp       String    @default("")
   nuptk         String?   @db.VarChar(20)
-  role          Role      @default(GURU)
+  role          Role      @default(PENGURUS)
   isActive      Boolean   @default(true)
   fotoProfil    String?
   createdAt     DateTime  @default(now())
@@ -115,6 +118,7 @@ model User {
   suratDibuat         SuratKeluar[]      @relation("SuratDibuat")
   suratTataUsaha      SuratKeluar[]      @relation("SuratTataUsaha")
   suratKepala         SuratKeluar[]      @relation("SuratKepala")
+  suratDewanMasyayikh SuratKeluar[]      @relation("SuratDewanMasyayikh")
   penerimaInternal    PenerimaInternal[]
   disposisiDiterima   Disposisi[]        @relation("DisposisiPenerima")
   disposisiDibuat     Disposisi[]        @relation("DisposisiDibuat")
@@ -142,13 +146,17 @@ model SuratKeluar {
 
   tataUsahaId     String?     @db.VarChar(36)
   kepalaId        String?     @db.VarChar(36)
+  dewanMasyayikhId String?    @db.VarChar(36)
   tataUsaha       User?       @relation("SuratTataUsaha", fields: [tataUsahaId], references: [id])
   kepala          User?       @relation("SuratKepala", fields: [kepalaId], references: [id])
+  dewanMasyayikh  User?       @relation("SuratDewanMasyayikh", fields: [dewanMasyayikhId], references: [id])
 
-  parafTataUsaha   Boolean     @default(false)
-  ttdKepala        Boolean     @default(false)
-  tglParafTataUsaha DateTime?
-  tglTtdKepala     DateTime?
+  parafTataUsaha        Boolean     @default(false)
+  ttdKepala             Boolean     @default(false)
+  ttdDewanMasyayikh     Boolean     @default(false)
+  tglParafTataUsaha     DateTime?
+  tglTtdKepala          DateTime?
+  tglTtdDewanMasyayikh  DateTime?
 
   catatanTolak    String?     @db.Text
   ditolakOleh     String?

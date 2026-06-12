@@ -18,10 +18,12 @@ import ConfirmDialog from '../components/ui/ConfirmDialog'
 const STATUS_OPTIONS = [
   { value: '', label: 'Semua Status' },
   { value: 'DRAFT', label: 'Draft' },
-  { value: 'MENUNGGU_TATA_USAHA', label: 'Menunggu Paraf TU' },
-  { value: 'MENUNGGU_KEPALA', label: 'Menunggu TTD Kepala' },
-  { value: 'DITOLAK_TATA_USAHA', label: 'Ditolak Tata Usaha' },
-  { value: 'DITOLAK_KEPALA', label: 'Ditolak Kepala' },
+  { value: 'MENUNGGU_SEKRETARIS', label: 'Menunggu Paraf Sekretaris' },
+  { value: 'MENUNGGU_KEPALA', label: 'Menunggu TTD Ketua' },
+  { value: 'MENUNGGU_DEWAN_MASYAYIKH', label: 'Menunggu TTD Dewan Masyayikh' },
+  { value: 'DITOLAK_SEKRETARIS', label: 'Ditolak Sekretaris' },
+  { value: 'DITOLAK_KEPALA', label: 'Ditolak Ketua' },
+  { value: 'DITOLAK_DEWAN_MASYAYIKH', label: 'Ditolak Dewan Masyayikh' },
   { value: 'SELESAI', label: 'Selesai' },
 ]
 
@@ -168,7 +170,7 @@ export default function SuratKeluarPage() {
                         >
                           <EyeIcon className="w-4 h-4" />
                         </Link>
-                        {user?.role === 'ADMIN' && ['DRAFT', 'DITOLAK_TATA_USAHA', 'DITOLAK_KEPALA'].includes(surat.status) && (
+                        {user?.role === 'ADMIN' && ['DRAFT', 'DITOLAK_SEKRETARIS', 'DITOLAK_KEPALA', 'DITOLAK_DEWAN_MASYAYIKH'].includes(surat.status) && (
                           <Link
                             to={`/surat-keluar/edit/${surat.id}`}
                             className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-500 hover:text-blue-600 transition-colors"

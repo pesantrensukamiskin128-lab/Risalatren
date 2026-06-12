@@ -175,7 +175,7 @@ export default function HadirVerifikasiPage() {
                 <label className="block text-sm font-medium text-gray-700 mb-1.5">Asal Instansi / Utusan</label>
                 <input
                   className="input"
-                  placeholder="Contoh: PC Fatayat NU Kota Bandung"
+                  placeholder="Contoh: Forum Pondok Pesantren (FPP) Kota Bandung"
                   value={formData.instansi}
                   onChange={e => setFormData(f => ({ ...f, instansi: e.target.value }))}
                 />
