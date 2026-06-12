@@ -40,7 +40,7 @@ export default function ProfilOrganisasiPage() {
   const updateMutation = useMutation({
     mutationFn: (fd) => organisasiAPI.updateProfil(fd),
     onSuccess: () => {
-      toast.success('Profil yayasan berhasil diperbarui')
+      toast.success('Profil organisasi berhasil diperbarui')
       queryClient.invalidateQueries(['organisasi'])
       setLogoFile(null)
       setLogoPreview(null)
@@ -85,8 +85,8 @@ export default function ProfilOrganisasiPage() {
   return (
     <div className="space-y-5 max-w-2xl">
       <div>
-        <h1 className="page-title">Profil Yayasan</h1>
-        <p className="text-sm text-gray-500 mt-0.5">Kelola informasi yayasan dan kop surat</p>
+        <h1 className="page-title">Profil Organisasi</h1>
+        <p className="text-sm text-gray-500 mt-0.5">Kelola informasi organisasi dan kop surat</p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-5">

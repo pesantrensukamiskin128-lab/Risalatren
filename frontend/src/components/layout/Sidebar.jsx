@@ -26,7 +26,7 @@ const navItems = [
   { to: '/scan-qr',         icon: QrCodeIcon,                label: 'Scan QR',          roles: SEMUA },
   { to: '/rekap',           icon: ChartBarIcon,              label: 'Rekap Surat',      roles: ['ADMIN'] },
   { to: '/manajemen-user',  icon: UsersIcon,                 label: 'Manajemen User',   roles: ['ADMIN'] },
-  { to: '/profil-organisasi',icon: BuildingOfficeIcon,       label: 'Profil Yayasan',   roles: ['ADMIN'] },
+  { to: '/profil-organisasi',icon: BuildingOfficeIcon,       label: 'Profil Organisasi',   roles: ['ADMIN'] },
 ]
 
 export default function Sidebar({ isOpen, onClose }) {
@@ -63,7 +63,7 @@ export default function Sidebar({ isOpen, onClose }) {
           <p className="font-bold text-primary-900 text-sm leading-tight truncate">
             RISALATREN
           </p>
-          <p className="text-xs text-gray-400 truncate">Forum Pondok Pesantren (FPP) Kota Bandung</p>
+          <p className="text-xs text-gray-400 truncate">FPP Kota Bandung</p>
         </div>
         {/* Close button mobile */}
         <button
