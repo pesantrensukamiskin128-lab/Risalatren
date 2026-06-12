@@ -2,34 +2,12 @@ const prisma = require('../config/prisma');
 
 const BULAN_ROMAWI = ['I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII'];
 
-// Kode klasifikasi surat — statis sesuai ketentuan organisasi
-const KODE_KLASIFIKASI = 'PP.06';
-
-/**
- * Buat singkatan dari tingkatan dan nama organisasi
- * Contoh: "Pimpinan Cabang" + "Fatayat Nahdlatul Ulama" → "PC-FNU"
- */
-function buatSingkatan(tingkatan, namaOrg) {
-  const singkatTingkatan = tingkatan
-    .split(' ')
-    .map(w => w[0]?.toUpperCase() || '')
-    .join('');
-
-  const singkatNama = namaOrg
-    .split(' ')
-    .map(w => w[0]?.toUpperCase() || '')
-    .join('');
-
-  return `${singkatTingkatan}-${singkatNama}`;
-}
-
 /**
  * Generate nomor surat otomatis
- * Format: 001/A/PC-FNU/PP.06/V/2026
- * - 001     = urutan surat bulan ini
+ * Format: 001/A/FPP-BDG/V/2026
+ * - 001     = urutan surat bulan ini (3 digit)
  * - A       = jenis surat (A/B/C/SK/...)
- * - PC-FNU  = singkatan tingkatan + nama org
- * - PP.06   = kode klasifikasi (statis)
+ * - FPP-BDG = singkatan Forum Pondok Pesantren Bandung
  * - V       = bulan romawi
  * - 2026    = tahun
  */
@@ -50,10 +28,21 @@ async function generateNomorSurat(jenisSurat = 'A') {
 
   const urutan = String(count + 1).padStart(3, '0');
 
-  // Singkatan organisasi — statis sesuai ketentuan
-  const singkatan = 'YPPS';
+  return `${urutan}/${jenisSurat}/FPP-BDG/${BULAN_ROMAWI[bulan - 1]}/${tahun}`;
+}
 
-  return `${urutan}/${jenisSurat}/${singkatan}/${KODE_KLASIFIKASI}/${BULAN_ROMAWI[bulan - 1]}/${tahun}`;
+function buatSingkatan(tingkatan, namaOrg) {
+  const singkatTingkatan = tingkatan
+    .split(' ')
+    .map(w => w[0]?.toUpperCase() || '')
+    .join('');
+
+  const singkatNama = namaOrg
+    .split(' ')
+    .map(w => w[0]?.toUpperCase() || '')
+    .join('');
+
+  return `${singkatTingkatan}-${singkatNama}`;
 }
 
 module.exports = { generateNomorSurat, buatSingkatan };

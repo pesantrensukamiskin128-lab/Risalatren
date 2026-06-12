@@ -79,8 +79,8 @@ export default function ProfilOrganisasiPage() {
   if (isLoading) return <PageLoader />
 
   const currentLogo = logoPreview || (profil?.logoPath ? getUploadUrl(profil.logoPath) : null)
-  // Preview nomor surat — singkatan dan PP.06 statis
-  const previewNomor = `001/A/YPPS/PP.06/V/${new Date().getFullYear()}`
+  // Preview nomor surat — format baru FPP-BDG
+  const previewNomor = `001/A/FPP-BDG/${['I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII'][new Date().getMonth()]}/${new Date().getFullYear()}`
 
   return (
     <div className="space-y-5 max-w-2xl">
@@ -172,7 +172,7 @@ export default function ProfilOrganisasiPage() {
             <p className="text-xs text-gray-500 mb-1">Preview format nomor surat:</p>
             <p className="font-mono text-sm font-semibold text-primary-700">{previewNomor}</p>
             <p className="text-xs text-gray-400 mt-1">
-              Urutan / Jenis / <strong>YPPS</strong> / PP.06 / Bulan-Romawi / Tahun
+              Urutan / Jenis / <strong>FPP-BDG</strong> / Bulan-Romawi / Tahun
             </p>
           </div>
         </div>
@@ -213,59 +213,77 @@ export default function ProfilOrganisasiPage() {
           <div className="border border-gray-200 rounded-xl p-4 bg-white overflow-x-auto">
             <div style={{ minWidth: 420 }}>
               {/* Area kop — logo kiri, teks kanan */}
-              <div className="flex items-center gap-0" style={{ paddingBottom: 6 }}>
-                {/* Logo */}
+              <div className="flex items-center" style={{ paddingBottom: 6 }}>
+                {/* Logo — diperkecil agar sejajar tinggi teks (sama seperti PDF: 72px) */}
                 {currentLogo && (
-                  <div className="flex-shrink-0 flex items-center justify-center" style={{ width: 80, height: 80, marginRight: 10 }}>
+                  <div className="flex-shrink-0 flex items-center justify-center"
+                    style={{ width: 72, height: 72, marginRight: 10 }}>
                     <img
                       src={currentLogo}
                       alt="Logo"
-                      style={{ maxWidth: 80, maxHeight: 80, width: 'auto', height: 'auto', objectFit: 'contain' }}
+                      style={{ maxWidth: 72, maxHeight: 72, width: 'auto', height: 'auto', objectFit: 'contain' }}
                     />
                   </div>
                 )}
                 {/* Teks kop */}
-                <div className="flex-1 text-center" style={{ lineHeight: 1.25 }}>
-                  {/* Tingkatan — hanya jika diisi */}
+                <div className="flex-1 text-center" style={{ lineHeight: 1.3 }}>
+                  {/* Tingkatan — Helvetica, hijau, kecil */}
                   {form.tingkatanOrg && (
-                    <p style={{ fontSize: 10, fontWeight: 700, color: '#166534', textTransform: 'uppercase', margin: 0 }}>
+                    <p style={{
+                      fontSize: 10, fontWeight: 700,
+                      fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
+                      color: '#166534', textTransform: 'uppercase', margin: '0 0 1px 0',
+                    }}>
                       {form.tingkatanOrg}
                     </p>
                   )}
-                  {/* Nama Arab — hanya jika diisi */}
+                  {/* Nama Arab */}
                   {form.namaArab && (
                     <p style={{
-                      fontSize: 18,
-                      color: '#166534',
-                      margin: '2px 0',
+                      fontSize: 18, color: '#166534', margin: '2px 0',
                       fontFamily: "'Traditional Arabic', 'Arial', serif",
-                      direction: 'rtl',
-                      unicodeBidi: 'bidi-override',
+                      direction: 'rtl', unicodeBidi: 'bidi-override',
                     }}>
                       {form.namaArab}
                     </p>
                   )}
-                  {/* Nama Org — hanya jika diisi */}
+                  {/* Nama Org — Helvetica Bold, HITAM, besar */}
                   {form.namaOrg && (
-                    <p style={{ fontSize: 16, fontWeight: 700, color: '#166534', textTransform: 'uppercase', margin: '1px 0' }}>
+                    <p style={{
+                      fontSize: 18, fontWeight: 700,
+                      fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
+                      color: '#000000', textTransform: 'uppercase', margin: '1px 0',
+                    }}>
                       {form.namaOrg}
                     </p>
                   )}
-                  {/* Daerah */}
+                  {/* Daerah — Helvetica Bold, HITAM, sama besar */}
                   {form.daerahOrg && (
-                    <p style={{ fontSize: 11, fontWeight: 700, color: '#166534', textTransform: 'uppercase', margin: '1px 0' }}>
+                    <p style={{
+                      fontSize: 18, fontWeight: 700,
+                      fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
+                      color: '#000000', textTransform: 'uppercase', margin: '1px 0',
+                    }}>
                       {form.daerahOrg}
                     </p>
                   )}
-                  {/* Alamat */}
+                  {/* Alamat — HIJAU */}
                   {form.alamat && (
-                    <p style={{ fontSize: 8.5, color: '#333333', margin: '1px 0' }}>
+                    <p style={{
+                      fontSize: 8.5, color: '#166534',
+                      fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
+                      margin: '1px 0',
+                    }}>
                       {form.alamat}
                     </p>
                   )}
-                  {/* Kontak */}
+                  {/* Kontak — HIJAU */}
                   {[form.telepon, form.email, form.website].filter(Boolean).length > 0 && (
-                    <p style={{ fontSize: 7.5, color: '#333333', margin: '1px 0' }}>
+                    <p style={{
+                      fontSize: 7.5, color: '#166534',
+                      fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
+                      margin: '1px 0',
+                    }}>
                       {[
                         form.telepon && `No. Telp.: ${form.telepon}`,
                         form.email   && `Email: ${form.email}`,
@@ -275,8 +293,7 @@ export default function ProfilOrganisasiPage() {
                   )}
                 </div>
               </div>
-              {/* Garis tebal hijau */}
-              <div style={{ height: 2.5, backgroundColor: '#166534', marginTop: 4 }} />
+              {/* Garis DIHAPUS sesuai pdfGenerator */}
             </div>
             <p className="text-[10px] text-gray-400 text-center mt-3 italic">
               Kop surat akan tampil seperti ini pada setiap halaman dokumen resmi
