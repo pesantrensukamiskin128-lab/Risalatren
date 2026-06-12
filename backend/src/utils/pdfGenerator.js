@@ -950,14 +950,14 @@ async function drawKopSurat(doc, organisasi, pageY) {
   if (daerah) {
     doc.font(F_KOP).fontSize(FS_KOP_DAERAH).fillColor('#000000')
        .text(daerah.toUpperCase(), textX, y, { width: textW, align: 'center' });
-    y = doc.y + 4;
+    y = doc.y + 6;
   }
 
   // Alamat — hijau
   if (alamat) {
     doc.font(F_KOP_REG).fontSize(FS_KOP_ALAMAT).fillColor(GREEN)
        .text(alamat, textX, y, { width: textW, align: 'center' });
-    y = doc.y + 2;
+    y = doc.y + 3;
   }
 
   // Kontak — hijau
