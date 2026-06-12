@@ -153,7 +153,7 @@ export default function DashboardPage() {
               </>
             )}
 
-            {/* Tampilan ADMIN/SEKRETARIS/KEPALA */}
+            {/* Tampilan ADMIN/SEKRETARIS/KEPALA/DEWAN_MASYAYIKH */}
             {user?.role !== 'PENGURUS' && (
               <>
                 {(!recentKeluar || recentKeluar.length === 0) && (

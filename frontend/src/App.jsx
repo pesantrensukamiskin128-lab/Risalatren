@@ -105,7 +105,7 @@ function App() {
           <Route 
             path="surat-masuk/tambah" 
             element={
-              <ProtectedRoute roles={['ADMIN', 'SEKRETARIS', 'KEPALA']}>
+              <ProtectedRoute roles={['ADMIN', 'SEKRETARIS', 'KEPALA', 'DEWAN_MASYAYIKH']}>
                 <SuratMasukFormPage />
               </ProtectedRoute>
             } 
@@ -113,7 +113,7 @@ function App() {
           <Route 
             path="surat-masuk/edit/:id" 
             element={
-              <ProtectedRoute roles={['ADMIN', 'SEKRETARIS', 'KEPALA']}>
+              <ProtectedRoute roles={['ADMIN', 'SEKRETARIS', 'KEPALA', 'DEWAN_MASYAYIKH']}>
                 <SuratMasukFormPage />
               </ProtectedRoute>
             } 

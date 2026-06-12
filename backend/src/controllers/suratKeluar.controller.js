@@ -139,7 +139,7 @@ const updateSurat = async (req, res) => {
     const existing = await prisma.suratKeluar.findUnique({ where: { id } });
     if (!existing) return res.status(404).json({ success: false, message: 'Surat tidak ditemukan' });
 
-    if (!['DRAFT','DITOLAK_SEKRETARIS','DITOLAK_KEPALA'].includes(existing.status))
+    if (!['DRAFT','DITOLAK_SEKRETARIS','DITOLAK_KEPALA','DITOLAK_DEWAN_MASYAYIKH'].includes(existing.status))
       return res.status(400).json({ success: false, message: 'Surat tidak dapat diedit pada status ini' });
 
     const {
@@ -229,7 +229,7 @@ const kirimSurat = async (req, res) => {
     const { id } = req.params;
     const surat = await prisma.suratKeluar.findUnique({ where: { id } });
     if (!surat) return res.status(404).json({ success: false, message: 'Surat tidak ditemukan' });
-    if (!['DRAFT','DITOLAK_SEKRETARIS','DITOLAK_KEPALA'].includes(surat.status))
+    if (!['DRAFT','DITOLAK_SEKRETARIS','DITOLAK_KEPALA','DITOLAK_DEWAN_MASYAYIKH'].includes(surat.status))
       return res.status(400).json({ success: false, message: 'Surat tidak dapat dikirim pada status ini' });
     if (!surat.tataUsahaId)
       return res.status(400).json({ success: false, message: 'Pilih Sekretaris terlebih dahulu' });

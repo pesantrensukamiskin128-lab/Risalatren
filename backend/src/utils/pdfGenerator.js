@@ -1167,14 +1167,20 @@ async function drawTandaTangan(doc, surat, startY, qrDataUrl) {
      .text(jabatanSekr + ',', xSekr, y, { width: colW, align: 'center' });
   y = doc.y + 4;
 
-  // ── Baris 2: QR di bawah jabatan Ketua ────────────────────────────────────
-  if (qrDataUrl && !dewanMasyayikh) {
-    // Tengahkan QR dalam kolom Ketua
+  // ── Baris 2: QR di bawah jabatan ─────────────────────────────────────────
+  // Selalu tampilkan QR di kedua kolom (Ketua & Sekretaris),
+  // baik ada maupun tidak ada Dewan Masyayikh
+  if (qrDataUrl) {
     const qrXKetua = xKetua + (colWKetua - qrSz) / 2;
+    const qrXSekr  = xSekr  + (colW      - qrSz) / 2;
+    const verifikasiUrl = `${getFrontendUrl()}/verifikasi/${surat.qrCodeToken}`;
     try {
       doc.image(qrDataUrl, qrXKetua, y, { width: qrSz, height: qrSz });
-      const verifikasiUrl = `${getFrontendUrl()}/verifikasi/${surat.qrCodeToken}`;
       doc.link(qrXKetua, y, qrSz, qrSz, verifikasiUrl);
+    } catch (_) {}
+    try {
+      doc.image(qrDataUrl, qrXSekr, y, { width: qrSz, height: qrSz });
+      doc.link(qrXSekr, y, qrSz, qrSz, verifikasiUrl);
     } catch (_) {}
     y += qrSz + 4;
   } else {

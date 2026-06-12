@@ -11,18 +11,22 @@ import useAuthStore from '../../store/authStore'
 import { useQuery } from '@tanstack/react-query'
 import { organisasiAPI, getUploadUrl } from '../../services/api'
 
+// Role yang setara dengan Ketua & Sekretaris (akses penuh non-admin)
+const PENANDATANGAN = ['ADMIN', 'SEKRETARIS', 'KEPALA', 'DEWAN_MASYAYIKH']
+const SEMUA         = ['ADMIN', 'SEKRETARIS', 'KEPALA', 'DEWAN_MASYAYIKH', 'PENGURUS']
+
 const navItems = [
-  { to: '/dashboard', icon: HomeIcon, label: 'Dashboard', roles: ['ADMIN', 'SEKRETARIS', 'KEPALA', 'PENGURUS'] },
-  { to: '/surat-keluar', icon: DocumentTextIcon, label: 'Surat Keluar', roles: ['ADMIN', 'SEKRETARIS', 'KEPALA', 'DEWAN_MASYAYIKH'] },
-  { to: '/template-surat', icon: DocumentDuplicateIcon, label: 'Template Surat', roles: ['ADMIN'] },
-  { to: '/surat-masuk', icon: InboxIcon, label: 'Surat Masuk', roles: ['ADMIN', 'SEKRETARIS', 'KEPALA', 'PENGURUS'] },
-  { to: '/disposisi', icon: ClipboardDocumentListIcon, label: 'Disposisi', roles: ['ADMIN', 'SEKRETARIS', 'KEPALA', 'PENGURUS'] },
-  { to: '/agenda', icon: CalendarDaysIcon, label: 'Agenda Kegiatan', roles: ['ADMIN', 'SEKRETARIS', 'KEPALA', 'PENGURUS'] },
-  { to: '/riwayat-presensi', icon: ClockIcon, label: 'Riwayat Presensi', roles: ['ADMIN', 'SEKRETARIS', 'KEPALA', 'PENGURUS'] },
-  { to: '/scan-qr', icon: QrCodeIcon, label: 'Scan QR', roles: ['ADMIN', 'SEKRETARIS', 'KEPALA', 'PENGURUS'] },
-  { to: '/rekap', icon: ChartBarIcon, label: 'Rekap Surat', roles: ['ADMIN'] },
-  { to: '/manajemen-user', icon: UsersIcon, label: 'Manajemen User', roles: ['ADMIN'] },
-  { to: '/profil-organisasi', icon: BuildingOfficeIcon, label: 'Profil Organisasi', roles: ['ADMIN'] },
+  { to: '/dashboard',       icon: HomeIcon,                  label: 'Dashboard',        roles: SEMUA },
+  { to: '/surat-keluar',    icon: DocumentTextIcon,          label: 'Surat Keluar',     roles: PENANDATANGAN },
+  { to: '/template-surat',  icon: DocumentDuplicateIcon,     label: 'Template Surat',   roles: ['ADMIN'] },
+  { to: '/surat-masuk',     icon: InboxIcon,                 label: 'Surat Masuk',      roles: SEMUA },
+  { to: '/disposisi',       icon: ClipboardDocumentListIcon, label: 'Disposisi',        roles: SEMUA },
+  { to: '/agenda',          icon: CalendarDaysIcon,          label: 'Agenda Kegiatan',  roles: SEMUA },
+  { to: '/riwayat-presensi',icon: ClockIcon,                 label: 'Riwayat Presensi', roles: SEMUA },
+  { to: '/scan-qr',         icon: QrCodeIcon,                label: 'Scan QR',          roles: SEMUA },
+  { to: '/rekap',           icon: ChartBarIcon,              label: 'Rekap Surat',      roles: ['ADMIN'] },
+  { to: '/manajemen-user',  icon: UsersIcon,                 label: 'Manajemen User',   roles: ['ADMIN'] },
+  { to: '/profil-organisasi',icon: BuildingOfficeIcon,       label: 'Profil Yayasan',   roles: ['ADMIN'] },
 ]
 
 export default function Sidebar({ isOpen, onClose }) {
