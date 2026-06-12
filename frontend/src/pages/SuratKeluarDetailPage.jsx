@@ -221,9 +221,9 @@ export default function SuratKeluarDetailPage() {
                   <p className="text-sm font-medium text-gray-800">
                     {surat.tataUsaha?.namaLengkap || 'Sekretaris belum dipilih'}
                   </p>
-                  <p className="text-xs text-gray-400">{surat.tataUsaha?.jabatan || 'Sekretaris (Paraf)'}</p>
+                  <p className="text-xs text-gray-400">{surat.tataUsaha?.jabatan || 'Sekretaris (Tandatangan)'}</p>
                   {surat.tglParafTataUsaha && (
-                    <p className="text-xs text-green-600 mt-0.5">✓ Paraf: {formatDateTime(surat.tglParafTataUsaha)}</p>
+                    <p className="text-xs text-green-600 mt-0.5">✓ TTD: {formatDateTime(surat.tglParafTataUsaha)}</p>
                   )}
                 </div>
               </div>
@@ -323,7 +323,7 @@ export default function SuratKeluarDetailPage() {
                 >
                   <CheckCircleIcon className="w-4 h-4" />
                   {ttdMutation.isPending ? 'Memproses...' : (
-                    user?.role === 'SEKRETARIS' ? 'Beri Paraf' : 'Tandatangani Surat'
+                    user?.role === 'SEKRETARIS' ? 'Beri Tandatangan' : 'Tandatangani Surat'
                   )}                </button>
               )}
               <button
@@ -340,7 +340,7 @@ export default function SuratKeluarDetailPage() {
       {/* Modal Kirim */}
       <Modal isOpen={kirimModal} onClose={() => setKirimModal(false)} title="Kirim Surat ke Sekretaris" size="sm">
         <p className="text-sm text-gray-600 mb-5">
-          Surat akan dikirim ke Sekretaris untuk diparaf. Pastikan semua informasi sudah benar.
+          Surat akan dikirim ke Sekretaris untuk ditandatangan. Pastikan semua informasi sudah benar.
         </p>
         <div className="flex gap-3">
           <button onClick={() => setKirimModal(false)} className="btn-secondary flex-1">Batal</button>

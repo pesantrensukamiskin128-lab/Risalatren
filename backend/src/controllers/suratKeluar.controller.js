@@ -242,8 +242,8 @@ const kirimSurat = async (req, res) => {
 
     if (updated.tataUsahaId) {
       await createNotifikasi(updated.tataUsahaId, {
-        judul: '✍️ Surat Menunggu Paraf',
-        pesan: `Surat "${updated.perihal}" perlu diparaf`,
+        judul: '✍️ Surat Menunggu Tandatangan',
+        pesan: `Surat "${updated.perihal}" perlu ditandatangan`,
         url: `/surat-keluar/${updated.id}`,
       });
     }
@@ -362,7 +362,7 @@ const tandaTangan = async (req, res) => {
       });
     }
 
-    res.json({ success: true, message: req.user.role === 'SEKRETARIS' ? 'Surat berhasil diparaf' : 'Surat berhasil ditandatangani', data: updated });
+    res.json({ success: true, message: req.user.role === 'SEKRETARIS' ? 'Surat berhasil ditandatangan' : 'Surat berhasil ditandatangani', data: updated });
   } catch (err) {
     console.error(err);
     res.status(500).json({ success: false, message: 'Terjadi kesalahan' });

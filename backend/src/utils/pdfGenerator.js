@@ -22,7 +22,7 @@ const F_ARAB_BOLD = 'ArabFontBold';
 const F_NASKH     = 'NaskhFont';
 // Font kop surat — Helvetica (built-in PDFKit, mirip Helvetica/Swiss)
 const F_KOP       = 'Helvetica-Bold';
-const F_KOP_REG   = 'Helvetica';
+const F_KOP_REG   = 'Times-Roman';
 
 // ── PAGE CONSTANTS ─────────────────────────────────────────────────────────[...]
 const ML = 57;   // margin left
@@ -42,7 +42,7 @@ const FS_KOP_NAMA     = 18;  // diperbesar, Helvetica Bold hitam
 const FS_KOP_ARAB     = 22;  // font Arab di kop surat
 const FS_KOP_DAERAH   = 18;  // disamakan dengan nama lembaga
 const FS_KOP_ALAMAT   = 8.5;
-const FS_KOP_KONTAK   = 7.5;
+const FS_KOP_KONTAK   = 8.5;
 
 // ── COLOURS ────────────────────────────────────────────────────────────[...]
 const GREEN      = '#166534';
@@ -950,14 +950,14 @@ async function drawKopSurat(doc, organisasi, pageY) {
   if (daerah) {
     doc.font(F_KOP).fontSize(FS_KOP_DAERAH).fillColor('#000000')
        .text(daerah.toUpperCase(), textX, y, { width: textW, align: 'center' });
-    y = doc.y + 2;
+    y = doc.y + 4;
   }
 
   // Alamat — hijau
   if (alamat) {
     doc.font(F_KOP_REG).fontSize(FS_KOP_ALAMAT).fillColor(GREEN)
        .text(alamat, textX, y, { width: textW, align: 'center' });
-    y = doc.y + 1;
+    y = doc.y + 2;
   }
 
   // Kontak — hijau

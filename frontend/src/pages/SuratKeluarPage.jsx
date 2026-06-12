@@ -18,7 +18,7 @@ import ConfirmDialog from '../components/ui/ConfirmDialog'
 const STATUS_OPTIONS = [
   { value: '', label: 'Semua Status' },
   { value: 'DRAFT', label: 'Draft' },
-  { value: 'MENUNGGU_SEKRETARIS', label: 'Menunggu Paraf Sekretaris' },
+  { value: 'MENUNGGU_SEKRETARIS', label: 'Menunggu TTD Sekretaris' },
   { value: 'MENUNGGU_KEPALA', label: 'Menunggu TTD Ketua' },
   { value: 'MENUNGGU_DEWAN_MASYAYIKH', label: 'Menunggu TTD Dewan Masyayikh' },
   { value: 'DITOLAK_SEKRETARIS', label: 'Ditolak Sekretaris' },
