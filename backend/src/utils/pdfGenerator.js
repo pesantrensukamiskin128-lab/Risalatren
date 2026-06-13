@@ -1148,7 +1148,7 @@ async function drawTandaTangan(doc, surat, startY, qrDataUrl) {
   const xKetua      = ML + ketuaOffset;
   const xSekr       = ML + colW + gapCol;
   const colWKetua   = colW - ketuaOffset;
-  const qrSz        = 50;
+  const qrSz        = 35;
   const gapTtd      = FS_ISI * 4;
 
   const kepala         = surat.kepala;
