@@ -75,7 +75,8 @@ export default function LoginPage() {
               )}
             </motion.div>
             <h1 className="text-2xl font-bold text-white mb-1">RISALATREN</h1>
-            <p className="text-primary-200 text-sm">Repositori Informasi Surat dan Administrasi Pondok Pesantren</p>
+            <p className="text-primary-200 text-sm">Repositori Informasi Surat dan Administrasi</p>
+            <p className="text-primary-200 text-sm">Forum Pondok Pesantren Kota Bandung</p>			
           </div>
 
           {/* Form */}
@@ -139,7 +140,7 @@ export default function LoginPage() {
 
         {/* Footer */}
         <p className="text-center text-primary-200 text-xs mt-6">
-          RISALATREN © {new Date().getFullYear()} — Repositori Informasi Surat dan Administrasi Pondok Pesantren
+          RISALATREN © {new Date().getFullYear()} — Repositori Informasi Surat dan Administrasi Pesantren
         </p>
       </motion.div>
     </div>
