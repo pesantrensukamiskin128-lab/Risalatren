@@ -155,6 +155,7 @@ export default function SuratKeluarPage() {
                     <td className="text-xs text-gray-500">
                       <div>{surat.tataUsaha?.namaLengkap || '—'}</div>
                       <div>{surat.kepala?.namaLengkap || '—'}</div>
+                      <div>{surat.dewanMasyayikh?.namaLengkap || '—'}</div>					  
                     </td>
                     <td>
                       <span className={getStatusClass(surat.status)}>
