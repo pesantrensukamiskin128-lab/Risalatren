@@ -18,7 +18,7 @@ export const formatDateTime = (date) => {
 export const getStatusLabel = (status) => {
   const labels = {
     DRAFT: 'Draft',
-    MENUNGGU_SEKRETARIS: 'Menunggu Paraf Sekretaris',
+    MENUNGGU_SEKRETARIS: 'Menunggu TTD Sekretaris',
     MENUNGGU_KEPALA: 'Menunggu TTD Ketua',
     MENUNGGU_DEWAN_MASYAYIKH: 'Menunggu TTD Dewan Masyayikh',
     DITOLAK_SEKRETARIS: 'Ditolak Sekretaris',

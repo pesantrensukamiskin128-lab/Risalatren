@@ -326,7 +326,7 @@ const tandaTangan = async (req, res) => {
 
     const updated = await prisma.suratKeluar.update({ where: { id }, data: updateData, include: suratInclude });
 
-    // Notifikasi: Sekretaris paraf → kirim ke Kepala atau Dewan Masyayikh
+    // Notifikasi: Sekretaris tandatangan → kirim ke Kepala atau Dewan Masyayikh
     if (req.user.role === 'SEKRETARIS') {
       if (updateData.status === 'MENUNGGU_KEPALA' && updated.kepalaId) {
         await createNotifikasi(updated.kepalaId, {
