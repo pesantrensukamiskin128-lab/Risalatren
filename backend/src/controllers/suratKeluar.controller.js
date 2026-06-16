@@ -92,7 +92,8 @@ const createSurat = async (req, res) => {
       return res.status(400).json({ success: false, message: 'Perihal, isi surat, dan tanggal diperlukan' });
 
     const tanggal = new Date(tanggalMasehi);
-    const hijriyah = toHijriyah(tanggal);
+    // Pakai nilai hijriyah dari frontend jika dikirim, fallback ke kalkulasi
+    const hijriyahFormatted = tanggalHijriyah || toHijriyah(tanggal).formatted;
 
     const surat = await prisma.suratKeluar.create({
       data: {
@@ -151,7 +152,8 @@ const updateSurat = async (req, res) => {
     } = req.body;
 
     const tanggal  = tanggalMasehi ? new Date(tanggalMasehi) : existing.tanggalMasehi;
-    const hijriyah = toHijriyah(tanggal);
+    // Pakai nilai hijriyah dari frontend jika dikirim, fallback ke kalkulasi
+    const hijriyahFormatted = tanggalHijriyah || toHijriyah(tanggal).formatted;
 
     await prisma.penerimaInternal.deleteMany({ where: { suratId: id } });
 
