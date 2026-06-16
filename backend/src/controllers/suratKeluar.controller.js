@@ -82,7 +82,7 @@ const createSurat = async (req, res) => {
   try {
     const {
       jenisSurat = 'A', perihal, lampiran, isiSurat, lampiranIsi,
-      tujuanSurat, tanggalMasehi, tempatTerbit,
+      tujuanSurat, tanggalMasehi, tanggalHijriyah, tempatTerbit,
       tataUsahaId, kepalaId, dewanMasyayikhId,
       penerimaEksternal, penerimaInternalIds,
       isDraft = true,
@@ -104,7 +104,7 @@ const createSurat = async (req, res) => {
         lampiranIsi:      lampiranIsi || null,
         tujuanSurat:      tujuanSurat || null,
         tanggalMasehi:    tanggal,
-        tanggalHijriyah:  hijriyah.formatted,
+        tanggalHijriyah:  hijriyahFormatted,
         tempatTerbit:     tempatTerbit || 'Bandung',
         status:           isDraft ? 'DRAFT' : 'MENUNGGU_SEKRETARIS',
         tataUsahaId:      tataUsahaId      || null,
@@ -145,7 +145,7 @@ const updateSurat = async (req, res) => {
 
     const {
       jenisSurat, perihal, lampiran, isiSurat, lampiranIsi,
-      tujuanSurat, tanggalMasehi, tempatTerbit,
+      tujuanSurat, tanggalMasehi, tanggalHijriyah, tempatTerbit,
       tataUsahaId, kepalaId, dewanMasyayikhId,
       penerimaEksternal, penerimaInternalIds,
       isDraft = true,
@@ -167,7 +167,7 @@ const updateSurat = async (req, res) => {
         lampiranIsi:      lampiranIsi      !== undefined ? lampiranIsi      : existing.lampiranIsi,
         tujuanSurat:      tujuanSurat      !== undefined ? tujuanSurat      : existing.tujuanSurat,
         tanggalMasehi:    tanggal,
-        tanggalHijriyah:  hijriyah.formatted,
+        tanggalHijriyah:  hijriyahFormatted,
         tempatTerbit:     tempatTerbit     ?? existing.tempatTerbit,
         status:           isDraft ? 'DRAFT' : 'MENUNGGU_SEKRETARIS',
         tataUsahaId:      tataUsahaId      !== undefined ? tataUsahaId      : existing.tataUsahaId,

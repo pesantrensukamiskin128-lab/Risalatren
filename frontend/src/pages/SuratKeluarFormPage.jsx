@@ -160,6 +160,7 @@ export default function SuratKeluarFormPage() {
         penerimaEksternal:   existingSurat.penerimaEksternal    || '',
         penerimaInternalIds: existingSurat.penerimaInternal?.map(p => p.userId) || [],
       })
+      const parsed = parseHijriyah(existingSurat.tanggalHijriyah)
       if (parsed) {
         setHijri(parsed)
         setHijriManual(true)
